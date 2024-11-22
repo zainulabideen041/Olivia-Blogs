@@ -1,0 +1,476 @@
+.hero-section {
+  background-image: url("../assets/hero.jpg");
+  background-size: cover;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 20px;
+  z-index: 1;
+  text-align: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(99, 19, 119, 0.6);
+  z-index: -1;
+}
+
+.hero-section h2 {
+  font-size: 4.5rem;
+}
+
+.hero-section p {
+  font-size: 1.5rem;
+  padding: 10px;
+}
+
+.hero-section h2,
+p {
+  color: #fff !important;
+}
+
+.hero-section .hero-btn {
+  transition: 1s ease-in-out;
+  margin: 10px 0px;
+}
+
+.hero-section .hero-btn:hover {
+  background-color: purple;
+}
+
+.hero-section .hero-btn .arrow-icon {
+  font-size: 20px;
+  transition: 1s ease;
+}
+
+.hero-section .hero-btn:hover .arrow-icon {
+  transform: translateX(15px);
+}
+
+.home-section h1 {
+  text-align: center;
+  font-size: 3.5rem;
+  margin: 20px 0px;
+  color: #444;
+  font-weight: 300;
+}
+
+.blog-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.card {
+  width: 300px;
+  margin: 10px 20px;
+  transition: 0.5s ease;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.card img {
+  width: 80%;
+  position: relative;
+  height: 60%;
+}
+.card img:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(128, 0, 139, 0.5);
+  z-index: 100;
+}
+
+.category-section {
+  padding: 0px 50px;
+  margin: 50px 0px;
+}
+
+.category-section h2 {
+  color: #444;
+}
+.category-section p {
+  color: #444 !important;
+}
+
+.category-items {
+  margin: 40px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.category-item {
+  border-radius: 50%;
+  margin: 10px 30px;
+  border: 3px solid rgb(146, 0, 190);
+  height: 150px;
+  width: 150px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s ease;
+  display: flex;
+  position: relative;
+}
+.category-item img {
+  width: 100%;
+  border-radius: 50%;
+  position: absolute;
+}
+.category-item h3 {
+  transition: 0.5s ease;
+  /* display: none; */
+  color: #fff;
+  z-index: 2;
+  font-size: 20px;
+}
+.category-item:hover {
+  cursor: pointer;
+}
+.category-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+.category-item:hover::before {
+  background-color: rgba(46, 46, 46, 0.5);
+}
+
+.blogs-section {
+  padding: 0px 50px;
+  margin: 50px 0px;
+}
+.blogs-section h2 {
+  color: #444;
+  margin-bottom: 30px;
+}
+
+.card-content {
+  padding: 10px;
+  height: 100%;
+}
+
+.card-content h4 {
+  color: #444;
+  padding: 5px;
+}
+.card .card-content p {
+  color: black !important;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines before truncating */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  padding: 5px;
+}
+
+.card h2,
+p {
+  color: #222;
+}
+
+.card img {
+  width: 100%;
+}
+
+/* ALL BLOGS PAGE  */
+.blogs-container {
+  padding: 30px 20px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 2px;
+}
+.blog-grid-item {
+  background-color: #c05cdf;
+  color: #fff;
+  border: 1px solid #a0a0a0;
+  border-radius: 2px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 5s ease-in-out;
+}
+.blog-grid-item:hover {
+  cursor: pointer;
+  background-color: #a632c9;
+  transform: scale(1.1);
+}
+.blog-grid-item img {
+  height: 150px;
+}
+/* 4(1)-3=1 , 4(2)-3=5, 4(3)-3=9 th item will take span 6 space and so on*/
+.blog-grid-item:nth-child(4n-3) {
+  grid-column: span 6;
+}
+/* 4(1)-2=2 , 4(1)-1=3, 4(1)=4 th item will take span 3 space and so on*/
+.blog-grid-item:nth-child(4n-2),
+.blog-grid-item:nth-child(4n-1),
+.blog-grid-item:nth-child(4n) {
+  grid-column: span 3;
+}
+
+.blog-grid-item .blog-content h3 {
+  font-weight: 300;
+  color: #fff !important;
+}
+
+/* AUTHORS PAGE  */
+
+.authors-page {
+  padding: 20px;
+}
+
+.authors-page h1 {
+  text-align: center;
+}
+
+.authors-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.author-card {
+  margin: 10px 30px;
+  border-radius: 10px;
+  border: 1px solid rgb(140, 140, 140);
+  padding: 20px;
+  text-align: center;
+}
+
+.author-card img {
+  height: 150px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.author-card h2 {
+  color: #444;
+}
+
+.author-card h2,
+p {
+  margin: 5px;
+}
+
+.author-card button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: none;
+  transition: 0.2s ease;
+}
+
+.author-card button:hover {
+  color: #fff;
+  cursor: pointer;
+  background-color: rgb(150, 22, 255);
+}
+
+.author-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* AUTHOR DASHBOARD  */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.author-dashboard {
+  padding: 0px 20px;
+}
+
+.author-dashboard .nav {
+  padding: 0px 10px;
+}
+
+.author-dashboard .nav h2 {
+  color: #444;
+}
+
+/* General table styles */
+.blogs-cards {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 50px;
+  margin-top: 20px;
+  font-size: 14px; /* Adjust font size for better readability */
+}
+
+.blogs-cards th,
+.blogs-cards td {
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.blogs-cards th {
+  background-color: #9100d4;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.blogs-cards tr:hover {
+  background-color: #f1f1f1;
+}
+
+.blogs-cards img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Action icons */
+.action-icons {
+  font-size: 25px;
+  margin-right: 5px;
+}
+
+.action-icons:hover {
+  cursor: pointer;
+}
+
+.edit-icon {
+  color: #007bff;
+}
+
+.edit-icon:hover {
+  color: #0056b3;
+}
+
+.delete-icon {
+  color: #dc3545;
+}
+
+.delete-icon:hover {
+  color: #b80315;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  /* Make table scrollable on smaller screens */
+  .blogs-cards {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap; /* Prevent table from breaking */
+  }
+
+  .blogs-cards th,
+  .blogs-cards td {
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  .blogs-cards img {
+    width: 60px;
+    height: 60px; /* Adjust image size */
+  }
+
+  .action-icons {
+    font-size: 20px; /* Adjust icon size */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Stack the table rows for extra small devices */
+  .blogs-cards {
+    border: none;
+  }
+
+  .blogs-cards tbody tr {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+
+  .blogs-cards th {
+    display: none; /* Hide table headers */
+  }
+
+  .blogs-cards td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  .blogs-cards td::before {
+    content: attr(data-label); /* Use custom data-label for accessibility */
+    font-weight: bold;
+    color: #9100d4;
+    flex-basis: 40%;
+    text-align: left;
+  }
+
+  .blogs-cards td[data-label="Actions"] {
+    justify-content: flex-start;
+  }
+
+  .blogs-cards img {
+    margin-right: 10px;
+  }
+}
+
+.author-dashboard div {
+  text-align: center;
+  color: #555;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+/* ADD BLOG PAGE  */
+.add-blog-section h2 {
+  color: #444;
+  text-align: center;
+}
+.ql-editor {
+  color: black !important; /* Ensures the text is always black */
+}
+
+.ql-editor h1,
+.ql-editor p,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6 {
+  color: black !important; /* Ensures headers are always black */
+}

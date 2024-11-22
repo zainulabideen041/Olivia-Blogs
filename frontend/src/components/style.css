@@ -1,0 +1,212 @@
+.login-page {
+  align-items: center;
+  text-align: center;
+  color: #333;
+}
+
+.login-page h1 {
+  text-align: center;
+  color: #444;
+  padding: 20px 0px;
+  font-size: 3.5rem;
+  font-weight: 300;
+}
+
+form {
+  border: 1px solid rgb(214, 214, 214);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px 0px;
+  margin: 10px 20px;
+  border-radius: 15px;
+}
+
+.field {
+  display: flex;
+  padding: 30px;
+  justify-content: space-between;
+  width: 40%;
+  align-items: center;
+}
+
+label {
+  margin-right: 10px;
+  font-size: 25px;
+}
+
+input {
+  padding: 10px;
+  font-size: 20px;
+  width: 70%;
+  border-radius: 10px;
+  outline: none;
+  color: #a700d1;
+  border: 1px solid rgb(212, 212, 212);
+}
+
+input:focus {
+  border: 1px solid rgb(188, 188, 188);
+}
+
+button {
+  padding: 10px 50px;
+  margin: 10px;
+  border-radius: 20px;
+  border: none;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background-color: #9400b9;
+  color: #fff;
+}
+
+/* NAVBAR CSS :  */
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 30px;
+  color: #fff;
+  background-color: #ffffff;
+}
+
+.navbar img {
+  width: 10%;
+}
+
+.list-items {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  justify-content: right;
+  padding-right: 2rem;
+  flex: 1;
+}
+
+.list-items h2 {
+  margin-top: 10px;
+  color: #c300ff;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+.list-items li {
+  margin: 0px 20px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #c300ff;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.list-items li:hover::before {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background-color: #9900ff;
+  bottom: 0%;
+  border-radius: 20px;
+  left: 0;
+  transform: translateY(-50%);
+  transition: 0.5s ease;
+}
+
+.active {
+  color: #c300ff;
+  font-weight: 550;
+}
+
+.login button {
+  margin: 0px 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  color: #c300ff;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.login button:hover {
+  cursor: pointer;
+}
+
+.login .user-icon {
+  color: #585858;
+  font-size: 30px;
+  margin: 0px 10px;
+}
+
+.login .user-icon:hover {
+  cursor: pointer;
+  color: #c300ff;
+}
+
+/* FOOTER CSS:  */
+
+.footer {
+  display: flex;
+  padding: 30px;
+  justify-content: space-between;
+  background-color: #993eac;
+}
+
+.footer .left h2,
+h4 {
+  color: #f7f7f7 !important;
+}
+
+.foot-desc {
+  color: #cccccc;
+}
+
+.left {
+  flex: 2;
+}
+.mid {
+  flex: 1;
+}
+.right {
+  flex: 1;
+}
+
+.mid,
+.right {
+  text-align: center;
+  color: #cccccc;
+}
+
+li {
+  margin: 10px 0px;
+}
+
+.contact-icons {
+  font-size: 30px;
+  color: #dbdbdb;
+  margin: 10px;
+}
+.contact-icons:hover {
+  cursor: pointer;
+  color: white;
+}
+
+a {
+  cursor: pointer;
+}
+
+a:hover {
+  color: #fff !important;
+}
+
+.outer-footer {
+  background-color: rgb(0, 0, 0);
+  border: 1px solid black;
+  text-align: center;
+}
