@@ -18,7 +18,7 @@ const Register = ({ closeModal }) => {
 
     try {
       const response = await axios.post(
-        "https://backend-umber-chi-47.vercel.app/user/create",
+        "https://backend-umber-chi-47.vercel.app/user/register",
         {
           username,
           password,

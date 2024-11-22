@@ -101,7 +101,6 @@ const Home = () => {
         <p data-aos="fade-up">
           Explore popular categories Lorem ipsum dolor sit amet Lorem ipsum
           dolor sit.. Scroll Vertically to view some more available Categories.
-
         </p>
         <Carousel
           responsive={responsive}
@@ -111,6 +110,7 @@ const Home = () => {
         >
           {categories.map((category) => (
             <div
+              data-aos="fade-up"
               key={category}
               className={`category-item ${
                 selectedCategory === category ? "active" : ""
