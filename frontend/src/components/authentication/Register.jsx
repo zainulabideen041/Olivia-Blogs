@@ -9,7 +9,7 @@ const Register = ({ closeModal }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/user/create", {
+      const response = await axios.post("https://backend-umber-chi-47.vercel.app/user/create", {
         username,
         password,
         email,

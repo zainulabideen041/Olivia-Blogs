@@ -41,7 +41,7 @@ const AddBlog = ({ AuthorId }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/blog/create/${AuthorId}`,
+        `https://backend-umber-chi-47.vercel.app/blog/create/${AuthorId}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

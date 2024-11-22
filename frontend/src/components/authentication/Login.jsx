@@ -16,7 +16,7 @@ const Login = ({ closeModal }) => {
     setErrorMessage("");
 
     try {
-      const response = await axios.post("http://localhost:5000/user/login", {
+      const response = await axios.post("https://backend-umber-chi-47.vercel.app/user/login", {
         username,
         password,
       });

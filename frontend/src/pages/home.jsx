@@ -21,7 +21,7 @@ const Home = () => {
   useEffect(() => {
     const getBlogs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/blog/display");
+        const response = await axios.get("https://backend-umber-chi-47.vercel.app/blog/display");
         setBlogs(response.data || []);
       } catch (error) {
         console.error(error);
@@ -31,7 +31,7 @@ const Home = () => {
     const getCategories = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/blog/categories"
+          "https://backend-umber-chi-47.vercel.app/blog/categories"
         );
         setCategories(["All", ...(response.data.categories || [])]);
       } catch (error) {
@@ -114,7 +114,7 @@ const Home = () => {
                 key={blog._id || blog.title}
                 onClick={() => ViewBlog(blog._id)}
               >
-                <img src={`http://localhost:5000/${blog.image}`} alt="" />
+                <img src={`https://backend-umber-chi-47.vercel.app/${blog.image}`} alt="" />
                 <div className="card-content">
                   <span className="card-content-date">
                     {new Date(blog.date).toLocaleDateString("en-GB", {

@@ -11,7 +11,7 @@ const Authors = () => {
   useEffect(() => {
     const getAuthors = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/blog/authors");
+        const response = await axios.get("https://backend-umber-chi-47.vercel.app/blog/authors");
         setAuthors(response.data.Authors || []);
       } catch (error) {
         console.error("Error fetching authors:", error);

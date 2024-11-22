@@ -13,7 +13,12 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-h1,h2,h3,h4,h5,p{
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
   color: #444;
 }
 
@@ -42,4 +47,11 @@ li {
 
 .navigation .blurred {
   backdrop-filter: blur(10px);
+}
+
+.blog-content-view {
+  margin-top: "20px";
+  font-size: "16px";
+  color: "black" !important;
+  line-height: "1.6";
 }

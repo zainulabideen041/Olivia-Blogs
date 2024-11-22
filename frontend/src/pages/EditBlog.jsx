@@ -21,7 +21,7 @@ const EditBlog = () => {
     const fetchBlog = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/blog/blog/${id}`
+          `https://backend-umber-chi-47.vercel.app/blog/blog/${id}`
         );
         setTitle(response.data.title);
         setContent(response.data.content);
@@ -48,7 +48,7 @@ const EditBlog = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/blog/update/${id}`,
+        `https://backend-umber-chi-47.vercel.app/blog/update/${id}`,
         {
           title,
           content,

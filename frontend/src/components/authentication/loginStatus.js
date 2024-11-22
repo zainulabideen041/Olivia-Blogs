@@ -2,11 +2,15 @@ import axios from "axios";
 
 const LoginStatus = async () => {
   try {
-    const response = await axios.post("http://localhost:5000/user", null, {
-      headers: {
-        token: localStorage.getItem("token"),
-      },
-    });
+    const response = await axios.post(
+      "https://backend-umber-chi-47.vercel.app/user",
+      null,
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    );
     return {
       loggedIn: true,
       user: response.data,

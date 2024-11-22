@@ -30,7 +30,7 @@ const Dashboard = () => {
       const fetchBlogs = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/blog/author/blogs/${authorId}`
+            `https://backend-umber-chi-47.vercel.app/blog/author/blogs/${authorId}`
           );
           setBlogs(response.data);
         } catch (error) {
@@ -61,7 +61,7 @@ const Dashboard = () => {
     if (result.isConfirmed) {
       try {
         const response = await axios.delete(
-          `http://localhost:5000/blog/delete/${id}`
+          `https://backend-umber-chi-47.vercel.app/blog/delete/${id}`
         );
 
         Swal.fire({
@@ -116,7 +116,7 @@ const Dashboard = () => {
               <tr key={blog._id}>
                 <td>
                   <img
-                    src={`http://localhost:5000/${blog.image}`}
+                    src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
                     alt={blog.title || "Blog Thumbnail"}
                   />
                 </td>

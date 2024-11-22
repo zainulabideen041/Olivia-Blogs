@@ -18,7 +18,9 @@ const Blogs = () => {
   useEffect(() => {
     const getBlogs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/blog/display");
+        const response = await axios.get(
+          "https://backend-umber-chi-47.vercel.app/blog/display"
+        );
         let allBlogs = response.data || [];
         if (authorId) {
           // Filter blogs by authorId if provided
@@ -61,7 +63,7 @@ const Blogs = () => {
                 <p>{stripHtmlTags(blog.content.slice(0, 50))}</p>
               </div>
               <img
-                src={`http://localhost:5000/${blog.image}`}
+                src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
                 alt={blog.title}
               />
             </div>
