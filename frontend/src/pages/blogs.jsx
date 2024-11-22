@@ -49,7 +49,7 @@ const Blogs = () => {
     <main className="blogs-container">
       <div className="grid-container">
         {blogs.length === 0 ? (
-          <p>No blogs found</p>
+          <h2>No blogs found</h2>
         ) : (
           blogs.map((blog) => (
             <div

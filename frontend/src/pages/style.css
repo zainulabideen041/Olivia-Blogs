@@ -159,6 +159,11 @@ p {
 .category-item:hover::before {
   background-color: rgba(46, 46, 46, 0.5);
 }
+.category-slider {
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
 
 .blogs-section {
   padding: 0px 50px;
@@ -205,6 +210,10 @@ p {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 2px;
+}
+.grid-container h2 {
+  grid-column: span 12;
+  text-align: center;
 }
 .blog-grid-item {
   background-color: #c05cdf;

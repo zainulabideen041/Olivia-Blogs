@@ -143,19 +143,33 @@ router.get("/author/blogs/:id", async (req, res) => {
 
 // DISPLAY ALL EXISTING CATEGORIES
 router.get("/categories", async (req, res) => {
-  try {
-    const categories = await Blog.distinct("category");
-
-    if (!categories.length) {
-      return res.status(404).json({ message: "No categories found" });
-    }
-
-    res.status(200).json({ categories });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to fetch categories", error: error.message });
-  }
+  const categories = [
+    "Technology",
+    "Sports",
+    "Politics",
+    "Business",
+    "Science",
+    "World",
+    "Entertainment",
+    "Health",
+    "Development",
+    "Education",
+    "Science/Tech",
+    "Social Media",
+    "Religion",
+    "Music",
+    "Lifestyle",
+    "Fashion",
+    "Food",
+    "Travel",
+    "Art",
+    "Environment",
+    "Economy",
+    "Relationships",
+    "Family",
+    "Drugs",
+  ];
+  res.json(categories);
 });
 
 //DISPLAY ALL UNIQUE AUTHORS

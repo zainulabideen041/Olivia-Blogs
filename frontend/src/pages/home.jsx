@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import { IoMdArrowForward } from "react-icons/io";
 import AiImg from "../assets/img2.jpg";
 import "aos/dist/aos.css";
@@ -8,6 +10,25 @@ import AOS from "aos";
 import "./style.css";
 
 const Home = () => {
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 7,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 4,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 2,
+    },
+  };
+
   const [blogs, setBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -21,7 +42,9 @@ const Home = () => {
   useEffect(() => {
     const getBlogs = async () => {
       try {
-        const response = await axios.get("https://backend-umber-chi-47.vercel.app/blog/display");
+        const response = await axios.get(
+          "https://backend-umber-chi-47.vercel.app/blog/display"
+        );
         setBlogs(response.data || []);
       } catch (error) {
         console.error(error);
@@ -33,7 +56,8 @@ const Home = () => {
         const response = await axios.get(
           "https://backend-umber-chi-47.vercel.app/blog/categories"
         );
-        setCategories(["All", ...(response.data.categories || [])]);
+        console.log(response.data);
+        setCategories(["All", ...(response.data || [])]);
       } catch (error) {
         console.error(error);
       }
@@ -77,23 +101,28 @@ const Home = () => {
         <h2 data-aos="fade-up">Explore Popular Categories</h2>
         <p data-aos="fade-up">
           Explore popular categories Lorem ipsum dolor sit amet Lorem ipsum
-          dolor sit..
+          dolor sit.. Scroll Vertically to view some more available Categories.
+
         </p>
-        <div className="category-items">
+        <Carousel
+          responsive={responsive}
+          infinite={true}
+          arrows={false}
+          className="category-slider"
+        >
           {categories.map((category) => (
             <div
               key={category}
               className={`category-item ${
                 selectedCategory === category ? "active" : ""
               }`}
-              data-aos="fade-up"
               onClick={() => setSelectedCategory(category)}
             >
               <img src={AiImg} alt={category} />
               <h3>{category}</h3>
             </div>
           ))}
-        </div>
+        </Carousel>
         <hr />
       </div>
 
@@ -114,7 +143,10 @@ const Home = () => {
                 key={blog._id || blog.title}
                 onClick={() => ViewBlog(blog._id)}
               >
-                <img src={`https://backend-umber-chi-47.vercel.app/${blog.image}`} alt="" />
+                <img
+                  src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
+                  alt=""
+                />
                 <div className="card-content">
                   <span className="card-content-date">
                     {new Date(blog.date).toLocaleDateString("en-GB", {
