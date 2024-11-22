@@ -16,7 +16,7 @@ const upload = multer({ storage });
 
 //ROUTE TO CREATE NEW BLOG
 router.post("/create/:id", upload.single("image"), async (req, res) => {
-  const { title, content, category, date } = req.body;
+  const { title, content, category } = req.body;
   const { id } = req.params;
 
   const authorExists = await Author.findById(id);
@@ -28,6 +28,7 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
     return res.status(400).json({ message: "Title, content are required" });
   }
 
+  const date = Date.now();
   const imagePath = req.file ? req.file.path : null;
 
   try {

@@ -2,52 +2,91 @@ import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
+import LoginStatus from "../components/authentication/loginStatus";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const AddBlog = ({ AuthorId }) => {
+const AddBlog = () => {
+  const [AuthorId, setAuthorId] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-
-  const Navigate = useNavigate();
-
-  const handleTitleChange = (e) => setTitle(e.target.value);
-  // const handleCategoryChange = (e) => setCategory(e.target.value);
-  const handleContentChange = (value) => setContent(value);
-  const handleImageChange = (e) => setImage(e.target.files[0]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
 
   useEffect(() => {
-    const getCategories = async () => {
+    const fetchUser = async () => {
+      try {
+        const result = await LoginStatus();
+        setAuthorId(result.user._id);
+      } catch (error) {
+        console.error("Error fetching user status:", error);
+      }
+    };
+
+    fetchUser();
+  }, [Location]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
       try {
         const response = await axios.get(
           "https://backend-umber-chi-47.vercel.app/blog/categories"
         );
         setCategories(response.data || []);
       } catch (error) {
-        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to fetch categories. Please try again later.",
+        });
+      } finally {
+        setCategoriesLoading(false);
       }
     };
-    getCategories();
+
+    fetchCategories();
   }, []);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && !["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
+      Swal.fire({
+        icon: "warning",
+        title: "Invalid File Type",
+        text: "Please upload a valid image (JPEG, JPG, PNG).",
+      });
+      return;
+    }
+    setImage(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) {
-      alert("Please fill in both title and content.");
+
+    if (!title.trim() || !content.trim() || !category.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Missing Fields",
+        text: "Please fill in all the required fields.",
+      });
+      return;
+    }
+
+    if (!AuthorId) {
+      Swal.fire({
+        icon: "error",
+        title: "Author Missing",
+        text: "Author ID is required to create a blog.",
+      });
       return;
     }
 
     setLoading(true);
-    setError(null);
-    setSuccess(false);
-
-    // Create FormData to send image and other data
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
@@ -55,36 +94,33 @@ const AddBlog = ({ AuthorId }) => {
     if (image) formData.append("image", image);
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `https://backend-umber-chi-47.vercel.app/blog/create/${AuthorId}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+
       Swal.fire({
         icon: "success",
-        title: "Blog Created!",
-        text: "Your blog was created successfully.",
-        confirmButtonText: "Okay",
+        title: "Blog Created",
+        text: "Your blog was created successfully!",
       });
+
       setTitle("");
       setContent("");
       setCategory("");
       setImage(null);
-      setSuccess(true);
-      Navigate("/dashboard");
+      navigate("/dashboard");
     } catch (err) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: err.response
-          ? err.response.data.message
-          : "There was an error creating the blog. Please try again.",
-        confirmButtonText: "Okay",
+        title: "Error",
+        text:
+          err.response?.data?.message ||
+          "Failed to create the blog. Please try again later.",
       });
-      console.error(err);
-      setError("There was an error creating the blog. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -95,24 +131,26 @@ const AddBlog = ({ AuthorId }) => {
       className="add-blog-section"
       style={{ width: "80%", margin: "0 auto", paddingTop: "20px" }}
     >
-      <h2>Add Blog Here..</h2>
+      <h2>Add Blog</h2>
 
-      {/* Blog Title */}
-      <label htmlFor="">Title:</label>
+      <label htmlFor="title">Title:</label>
       <input
+        id="title"
         type="text"
         value={title}
-        onChange={handleTitleChange}
+        onChange={(e) => setTitle(e.target.value)}
         placeholder="Enter blog title"
         style={{
           width: "100%",
           padding: "10px",
           marginBottom: "20px",
-          fontSize: "20px",
+          fontSize: "16px",
           border: "1px solid #ccc",
           borderRadius: "4px",
         }}
+        aria-label="Blog Title"
       />
+
       <label htmlFor="category">Category:</label>
       <select
         id="category"
@@ -122,63 +160,65 @@ const AddBlog = ({ AuthorId }) => {
           width: "100%",
           padding: "10px",
           marginBottom: "20px",
-          fontSize: "20px",
+          fontSize: "16px",
           border: "1px solid #ccc",
           borderRadius: "4px",
         }}
+        aria-label="Blog Category"
+        disabled={categoriesLoading}
       >
         <option value="">Select a category</option>
-        {categories.map((cat) => (
-          <option key={cat.id || cat.name} value={cat.name}>
+        {categories.map((cat, index) => (
+          <option key={index} value={cat}>
             {cat}
           </option>
         ))}
       </select>
+      {categoriesLoading && <p>Loading categories...</p>}
 
-      <label htmlFor="">Content:</label>
-      {/* React Quill Editor */}
+      <label htmlFor="content">Content:</label>
       <ReactQuill
         value={content}
-        onChange={handleContentChange}
+        onChange={(value) => setContent(value)}
         style={{
           height: "350px",
           background: "#f7f7f7",
           borderRadius: "4px",
           color: "black",
-          marginBottom: "60px",
+          marginBottom: "20px",
         }}
       />
-      <label htmlFor="">Thumbnail:</label>
+
+      <label htmlFor="thumbnail">Thumbnail:</label>
       <input
+        id="thumbnail"
         type="file"
         onChange={handleImageChange}
         style={{
           width: "100%",
           padding: "10px",
           marginBottom: "20px",
-          fontSize: "15px",
+          fontSize: "16px",
           border: "1px solid #ccc",
           borderRadius: "4px",
         }}
+        aria-label="Blog Thumbnail"
       />
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>Blog created successfully!</p>}
 
       <button
         className="create-blog-btn"
         onClick={handleSubmit}
+        disabled={loading}
         style={{
           padding: "10px 20px",
-          backgroundColor: "#4CAF50",
+          backgroundColor: loading ? "#ccc" : "#4CAF50",
           color: "white",
-          marginBottom: "50px",
+          border: "none",
           borderRadius: "4px",
-          cursor: "pointer",
+          cursor: loading ? "not-allowed" : "pointer",
         }}
       >
-        Create Blog
+        {loading ? "Creating..." : "Create Blog"}
       </button>
     </div>
   );

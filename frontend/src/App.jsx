@@ -93,7 +93,7 @@ const App = () => {
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route
             path="/create-blog"
-            element={<AddBlog AuthorId={authorId} />}
+            element={<AddBlog />}
           />
           <Route path="/edit-blog/:id" element={<EditBlogs />} />
           <Route path="*" element={<NotFound />} />
