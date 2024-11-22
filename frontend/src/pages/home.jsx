@@ -56,7 +56,6 @@ const Home = () => {
         const response = await axios.get(
           "https://backend-umber-chi-47.vercel.app/blog/categories"
         );
-        console.log(response.data);
         setCategories(["All", ...(response.data || [])]);
       } catch (error) {
         console.error(error);
