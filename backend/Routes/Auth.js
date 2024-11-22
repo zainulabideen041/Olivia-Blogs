@@ -5,7 +5,7 @@ const bcryptjs = require("bcryptjs");
 const router = express.Router();
 const multer = require("multer");
 
-const JWT_SECRET = "secretcodejwt";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

@@ -1,16 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use("/uploads", express.static("uploads"));
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb://127.0.0.1:27017/BlogginWeb");
+mongoose.connect(process.env.MONGO_URI);
 
 // AUTHENTICATION ROUTES
 app.use("/user", require("./Routes/Auth"));
