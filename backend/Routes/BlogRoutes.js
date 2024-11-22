@@ -19,32 +19,44 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
   const { title, content, category } = req.body;
   const { id } = req.params;
 
-  const authorExists = await Author.findById(id);
-  authorExists.totalBlogs = totalBlogs + 1;
-  authorExists.save();
-  const authorName = authorExists.username;
-
-  if (!title || !content) {
-    return res.status(400).json({ message: "Title, content are required" });
-  }
-
-  const date = Date.now();
-  const imagePath = req.file ? req.file.path : null;
-
   try {
+    // Validate input data
+    if (!title || !content) {
+      return res
+        .status(400)
+        .json({ message: "Title and content are required" });
+    }
+
+    // Check if author exists
+    const authorExists = await Author.findById(id);
+    if (!authorExists) {
+      return res.status(404).json({ message: "Author not found" });
+    }
+
+    // Increment author's blog count safely
+    const totalBlogs = authorExists.totalBlogs || 0;
+    authorExists.totalBlogs = totalBlogs + 1;
+    await authorExists.save();
+
+    const date = Date.now();
+    const imagePath = req.file ? req.file.path : null;
+
+    // Create the blog
     const newBlog = await Blog.create({
       title,
       content,
-      author: authorName,
+      author: authorExists.username,
       date,
       category,
       authorId: id,
       image: imagePath,
     });
+
     res
       .status(201)
       .json({ message: "Blog created successfully", blog: newBlog });
   } catch (error) {
+    console.error("Error creating blog:", error.message);
     res
       .status(500)
       .json({ message: "Failed to create blog", error: error.message });
