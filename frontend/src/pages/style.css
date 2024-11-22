@@ -335,6 +335,9 @@ p {
   border-collapse: collapse;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 50vh;
+  max-height: 200vh;
+  overflow-y: scroll;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 50px;

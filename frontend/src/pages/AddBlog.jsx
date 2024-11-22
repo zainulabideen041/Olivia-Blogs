@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const AddBlog = ({ AuthorId }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -17,9 +18,23 @@ const AddBlog = ({ AuthorId }) => {
   const Navigate = useNavigate();
 
   const handleTitleChange = (e) => setTitle(e.target.value);
-  const handleCategoryChange = (e) => setCategory(e.target.value);
+  // const handleCategoryChange = (e) => setCategory(e.target.value);
   const handleContentChange = (value) => setContent(value);
   const handleImageChange = (e) => setImage(e.target.files[0]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const response = await axios.get(
+          "https://backend-umber-chi-47.vercel.app/blog/categories"
+        );
+        setCategories(response.data || []);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getCategories();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,12 +113,11 @@ const AddBlog = ({ AuthorId }) => {
           borderRadius: "4px",
         }}
       />
-      <label htmlFor="">Category:</label>
-      <input
-        type="text"
+      <label htmlFor="category">Category:</label>
+      <select
+        id="category"
         value={category}
-        onChange={handleCategoryChange}
-        placeholder="Enter Blog Category"
+        onChange={(e) => setCategory(e.target.value)}
         style={{
           width: "100%",
           padding: "10px",
@@ -112,7 +126,15 @@ const AddBlog = ({ AuthorId }) => {
           border: "1px solid #ccc",
           borderRadius: "4px",
         }}
-      />
+      >
+        <option value="">Select a category</option>
+        {categories.map((cat) => (
+          <option key={cat.id || cat.name} value={cat.name}>
+            {cat}
+          </option>
+        ))}
+      </select>
+
       <label htmlFor="">Content:</label>
       {/* React Quill Editor */}
       <ReactQuill
