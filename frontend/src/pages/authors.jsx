@@ -11,7 +11,9 @@ const Authors = () => {
   useEffect(() => {
     const getAuthors = async () => {
       try {
-        const response = await axios.get("https://backend-umber-chi-47.vercel.app/blog/authors");
+        const response = await axios.get(
+          "https://backend-umber-chi-47.vercel.app/blog/authors"
+        );
         setAuthors(response.data.Authors || []);
       } catch (error) {
         console.error("Error fetching authors:", error);
@@ -27,10 +29,18 @@ const Authors = () => {
 
   return (
     <main className="authors-page">
-      <h1>All Authors</h1>
       <div className="blog-cards">
         {authors.length === 0 ? (
-          <div>No Authors found</div>
+          <h2
+            style={{
+              minHeight: "50vh",
+              justifyContent: "center",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            No Authors found
+          </h2>
         ) : (
           authors.map((author) => (
             <div data-aos="fade-up" className="card" key={author._id}>

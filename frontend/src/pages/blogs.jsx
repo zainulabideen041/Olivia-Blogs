@@ -12,7 +12,7 @@ const Blogs = () => {
   const authorId = location.state?.authorId; // Get authorId from state
 
   useEffect(() => {
-    AOS.init({ duration: 1000 });
+    AOS.init({ duration: 1000, once: true });
   }, []);
 
   useEffect(() => {
@@ -49,7 +49,16 @@ const Blogs = () => {
     <main className="blogs-container">
       <div className="grid-container">
         {blogs.length === 0 ? (
-          <h2>No blogs found</h2>
+          <h2
+            style={{
+              minHeight: "50vh",
+              justifyContent: "center",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            No blogs found
+          </h2>
         ) : (
           blogs.map((blog) => (
             <div

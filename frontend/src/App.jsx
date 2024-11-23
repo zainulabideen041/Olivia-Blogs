@@ -91,10 +91,7 @@ const App = () => {
       {loggedin ? (
         <Routes>
           <Route path="/dashboard" element={<AdminDashboard />} />
-          <Route
-            path="/create-blog"
-            element={<AddBlog />}
-          />
+          <Route path="/create-blog" element={<AddBlog />} />
           <Route path="/edit-blog/:id" element={<EditBlogs />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -108,7 +105,7 @@ const App = () => {
         </Routes>
       )}
       <footer>
-        <Footer />
+        <Footer LoginModal={OpenLoginModal} RegisterModal={OpenRegisterModal} />
       </footer>
       {/* MODAL FOR ACCOUNT LOGIN  */}
       <Modal

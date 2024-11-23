@@ -36,7 +36,7 @@ const Home = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    AOS.init({ duration: 1500 });
+    AOS.init({ duration: 1500, once: true });
   }, []);
 
   useEffect(() => {
@@ -106,6 +106,9 @@ const Home = () => {
           responsive={responsive}
           infinite={true}
           arrows={false}
+          autoPlay={true}
+          autoPlaySpeed={1000}
+          pauseOnHover={true}
           className="category-slider"
         >
           {categories.map((category) => (
@@ -165,6 +168,18 @@ const Home = () => {
               </div>
             ))
           )}
+        </div>
+      </div>
+      <div className="email-section">
+        <div className="email-section-content">
+          <h1>Get in Touch</h1>
+          <p>
+            Subscribe to our newsletter to receive new blog notifications first
+          </p>
+          <div className="email-input">
+            <input type="email" placeholder="Enter Your Email Address" />
+            <button className="email-submit">Subscribe</button>
+          </div>
         </div>
       </div>
     </main>

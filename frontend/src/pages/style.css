@@ -40,7 +40,11 @@ p {
 
 .hero-section .hero-btn {
   transition: 1s ease-in-out;
-  margin: 10px 0px;
+  padding: 10px 50px;
+  margin: 10px;
+  border-radius: 20px;
+  border: none;
+  transition: 0.2s ease;
 }
 
 .hero-section .hero-btn:hover {
@@ -99,7 +103,7 @@ p {
 }
 
 .category-section {
-  padding: 0px 50px;
+  padding: 0px 20px;
   margin: 50px 0px;
 }
 
@@ -153,11 +157,11 @@ p {
   border-radius: 50%;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(95, 0, 119, 0.7);
   z-index: 1;
 }
 .category-item:hover::before {
-  background-color: rgba(46, 46, 46, 0.5);
+  background-color: rgba(122, 0, 122, 0.5);
 }
 .category-slider {
   width: 80%;
@@ -202,6 +206,80 @@ p {
   width: 100%;
 }
 
+/* EMAIL SECTION IN HOME PAGE  */
+.email-section {
+  background-image: url("../assets/emailsection.webp");
+  height: 50vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-bottom: 1px solid rgb(158, 158, 158);
+}
+
+.email-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(192, 0, 240, 0.8);
+  z-index: 1;
+}
+
+.email-section-content {
+  position: relative;
+  z-index: 2; /* Ensure content is above the overlay */
+  text-align: center;
+}
+
+.email-section h1 {
+  color: #fff;
+  font-weight: 500;
+  margin: 0;
+}
+.email-section p {
+  margin: 10px 0;
+  font-size: 1.5rem;
+  color: white; /* Ensures contrast with background */
+}
+.email-input {
+  margin: 20px 0px;
+}
+.email-input input {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  width: 500px;
+  max-width: 90%;
+  outline: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.email-input input::placeholder {
+  color: #ccc;
+}
+.email-input input:focus {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.email-submit {
+  background-color: black;
+  color: #fff;
+  margin: 0;
+  border-radius: none;
+  padding: 10px 50px;
+  border: none;
+  transition: 0.2s ease;
+}
+.email-submit:hover {
+  background-color: #222;
+}
+
 /* ALL BLOGS PAGE  */
 .blogs-container {
   padding: 30px 20px;
@@ -210,6 +288,7 @@ p {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 2px;
+  min-height: 40vh;
 }
 .grid-container h2 {
   grid-column: span 12;
@@ -256,6 +335,7 @@ p {
 
 .authors-page {
   padding: 20px;
+  min-height: 50vh;
 }
 
 .authors-page h1 {

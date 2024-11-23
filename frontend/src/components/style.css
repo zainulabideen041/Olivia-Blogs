@@ -32,12 +32,12 @@ form {
   align-items: center;
 }
 
-label {
+.field label {
   margin-right: 10px;
   font-size: 20px;
 }
 
-input {
+.field input {
   padding: 10px;
   font-size: 15px;
   width: 70%;
@@ -47,11 +47,11 @@ input {
   border: 1px solid rgb(212, 212, 212);
 }
 
-input:focus {
+.field input:focus {
   border: 1px solid rgb(188, 188, 188);
 }
 
-button {
+form button {
   padding: 10px 50px;
   margin: 10px;
   border-radius: 20px;
@@ -59,7 +59,7 @@ button {
   transition: 0.2s ease;
 }
 
-button:hover {
+form button:hover {
   background-color: #9400b9;
   color: #fff;
 }

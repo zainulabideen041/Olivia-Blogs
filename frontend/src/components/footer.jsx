@@ -1,8 +1,9 @@
 import React from "react";
 import { CiInstagram, CiFacebook, CiTwitter } from "react-icons/ci";
+import { Link } from "react-router-dom";
 import "./style.css";
 
-const footer = () => {
+const footer = ({LoginModal, RegisterModal}) => {
   return (
     <>
       <div className="footer">
@@ -16,22 +17,28 @@ const footer = () => {
         <div className="mid">
           <h4>Checkout</h4>
           <li>
-            <a>Blogs</a>
+            <Link to="/blogs">
+              <a>Blogs</a>
+            </Link>
           </li>
           <li>
-            <a>Categories</a>
+            <Link>
+              <a>Categories</a>
+            </Link>
           </li>
           <li>
-            <a>Authors</a>
+            <Link to="authors">
+              <a>Authors</a>
+            </Link>
           </li>
         </div>
         <div className="mid">
           <h4>Personal</h4>
           <li>
-            <a>Login</a>
+            <a onClick={LoginModal}>Login</a>
           </li>
           <li></li>
-          <a>Signup</a>
+          <a onClick={RegisterModal}>Signup</a>
           <li>
             <a>Authors</a>
           </li>
@@ -46,7 +53,7 @@ const footer = () => {
         </div>
       </div>
       <div className="outer-footer">
-        <p>&copy; 2022 Blogging. All rights reserved.</p>
+        <p>Olivia Blog &copy; 2024 Blogging Web. All rights reserved.</p>
       </div>
     </>
   );
