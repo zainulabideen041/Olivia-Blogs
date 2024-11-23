@@ -117,7 +117,7 @@ const Dashboard = () => {
                 <td>
                   <img
                     src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
-                    alt={blog.title || "Blog Thumbnail"}
+                    alt={"Blog Thumbnail"}
                   />
                 </td>
                 <td>{blog.title}</td>

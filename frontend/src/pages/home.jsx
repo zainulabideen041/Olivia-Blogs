@@ -36,7 +36,7 @@ const Home = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    AOS.init({ duration: 2000 });
+    AOS.init({ duration: 1500 });
   }, []);
 
   useEffect(() => {
@@ -154,7 +154,7 @@ const Home = () => {
                       year: "numeric",
                     })}
                   </span>
-                  <h4>{blog.title}</h4>
+                  <h3>{blog.title}</h3>
                   <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Fugiat, architecto. Lorem ipsum dolor, sit amet consectetur
