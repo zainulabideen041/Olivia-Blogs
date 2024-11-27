@@ -4,13 +4,14 @@
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;
-  scroll-behavior: smooth;
+  scroll-behavior: smooth
 }
 
 body {
   background-color: #ffffff;
   color: #414141;
   font-family: "Poppins", sans-serif;
+  width: 100%;
 }
 
 h1,

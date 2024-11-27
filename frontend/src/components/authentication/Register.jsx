@@ -56,7 +56,7 @@ const Register = ({ closeModal }) => {
   return (
     <div className="login-page">
       <ToastContainer />
-      <h1>AUTHOR REGISTRATION</h1>
+      <h2>AUTHOR REGISTRATION</h2>
       <form onSubmit={handleSubmit}>
         <div className="field">
           <label>Username: </label>

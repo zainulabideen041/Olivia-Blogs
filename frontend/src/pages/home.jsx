@@ -13,11 +13,11 @@ const Home = () => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 7,
+      items: 8,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 5,
+      items: 6,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -170,13 +170,13 @@ const Home = () => {
           )}
         </div>
       </div>
-      <div className="email-section">
+      <div className="email-section" data-aos="fade-up">
         <div className="email-section-content">
-          <h1>Get in Touch</h1>
-          <p>
+          <h1 data-aos="fade-right">Get in Touch</h1>
+          <p data-aos="fade-left">
             Subscribe to our newsletter to receive new blog notifications first
           </p>
-          <div className="email-input">
+          <div className="email-input" data-aos="fade-right">
             <input type="email" placeholder="Enter Your Email Address" />
             <button className="email-submit">Subscribe</button>
           </div>

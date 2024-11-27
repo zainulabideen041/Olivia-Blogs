@@ -55,7 +55,7 @@ const Login = ({ closeModal }) => {
   return (
     <div className="login-page">
       <ToastContainer />
-      <h1>AUTHOR LOGIN</h1>
+      <h2>AUTHOR LOGIN</h2>
       <form onSubmit={handleLogin}>
         <div className="field">
           <label>Username: </label>

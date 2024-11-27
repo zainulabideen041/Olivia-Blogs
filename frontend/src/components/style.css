@@ -4,12 +4,12 @@
   color: #333;
 }
 
-.login-page h1 {
+.login-page h2 {
   text-align: center;
   color: #444;
   padding: 20px 0px;
-  font-size: 3rem;
-  font-weight: 300;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 form {
@@ -68,7 +68,7 @@ form button:hover {
 
 .navbar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 5px 30px;
   color: #fff;
@@ -83,8 +83,7 @@ form button:hover {
   display: flex;
   align-items: center;
   list-style-type: none;
-  justify-content: right;
-  padding-right: 2rem;
+  justify-content: flex-end;
   flex: 1;
 }
 
@@ -97,7 +96,7 @@ form button:hover {
 
 .list-items li {
   margin: 0px 20px;
-  margin-top: 10px;
+  margin-top: 15px;
   text-decoration: none;
   font-size: 20px;
   color: #c300ff;
@@ -123,19 +122,25 @@ form button:hover {
   font-weight: 550;
 }
 
+.login{
+  margin: 0px 10px;
+}
+
 .login button {
   margin: 0px 10px;
-  padding: 5px;
-  border-radius: 5px;
-  border: none;
+  padding: 5px 20px;
+  border-radius: 20px;
+  border: 1px solid rgb(194, 194, 194);
   color: #c300ff;
   background-color: transparent;
+  transition: .4s ease;
   font-weight: bold;
   font-size: 20px;
 }
 
 .login button:hover {
   cursor: pointer;
+  background-color: #333;
 }
 
 .login .user-icon {
@@ -149,10 +154,100 @@ form button:hover {
   color: #c300ff;
 }
 
+/* Hamburger icon (visible only on smaller screens) */
+.hamburger-icon {
+  display: none;
+  font-size: 30px;
+  color: #c300ff;
+  cursor: pointer;
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #ffffff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  padding-top: 50px;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.sidebar-items {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-items li {
+  padding: 15px;
+  font-size: 20px;
+  color: #c300ff;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-items li:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar-btn {
+  background: transparent;
+  border: none;
+  color: #c300ff;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.sidebar-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.close-icon {
+  font-size: 30px;
+  color: #c300ff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+  .navbar img {
+    width: 20%;
+  }
+  .list-items {
+    display: none;
+  }
+
+  .login {
+    display: none;
+  }
+  .hamburger-icon {
+    display: block;
+  }
+
+  .navbar {
+    justify-content: space-between;
+  }
+
+  /* When the sidebar is open, the rest of the page content is pushed */
+  .sidebar {
+    display: block;
+  }
+}
+
 /* FOOTER CSS:  */
 
 .footer {
   display: flex;
+  flex-wrap: wrap;
   padding: 30px;
   justify-content: space-between;
   background-color: #993eac;
@@ -209,4 +304,16 @@ a:hover {
   background-color: rgb(0, 0, 0);
   border: 1px solid black;
   text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+  .left,
+  .mid,
+  .right {
+    margin: 10px 0px;
+  }
 }
