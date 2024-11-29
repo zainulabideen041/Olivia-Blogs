@@ -39,12 +39,13 @@ const EditBlog = () => {
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleCategoryChange = (e) => setCategory(e.target.value);
   const handleContentChange = (value) => setContent(value);
-  const handleImageChange = (e) => setImage(e.target.files[0]);
 
   const handleEdit = async () => {
     setLoading(true);
     setError(null);
     setSuccess(false);
+
+    console.log(image);
 
     try {
       const response = await axios.post(
@@ -63,8 +64,8 @@ const EditBlog = () => {
         text: "Your blog was updated successfully.",
         confirmButtonText: "Okay",
       });
-
       setSuccess(true);
+      navigate("/dashboard");
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -135,7 +136,7 @@ const EditBlog = () => {
       <label htmlFor="">Thumbnail:</label>
       <input
         type="file"
-        onChange={handleImageChange}
+        onChange={(e) => setImage(e.target.files[0])}
         style={{
           width: "100%",
           padding: "10px",

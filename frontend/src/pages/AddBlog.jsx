@@ -12,7 +12,7 @@ const AddBlog = () => {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
 

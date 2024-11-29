@@ -6,10 +6,9 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Save to 'uploads/' directory
+    cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
-    // Generate a unique filename based on current timestamp and original file name
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
@@ -25,7 +24,6 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
 });
 
 //ROUTE TO CREATE NEW BLOG
@@ -50,7 +48,7 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
     const date = Date.now();
 
     // Check if image is uploaded
-    let imagePath = null;
+    let imagePath = "";
     if (req.file) {
       imagePath = req.file.path; // Get the image path only if the file is uploaded
     }
@@ -63,7 +61,7 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
       date,
       category,
       authorId: id,
-      image: imagePath, // Set image to null if no image is uploaded
+      image: imagePath,
     });
 
     // Increment author's blog count safely
@@ -86,14 +84,12 @@ router.post("/update/:id", upload.single("image"), async (req, res) => {
   const id = req.params.id;
   const { title, content, category } = req.body;
 
-  const date = new Date();
-
   const imagePath = req.file ? req.file.path : null;
 
   try {
     const updatedBlog = await Blog.findByIdAndUpdate(
       id,
-      { title, content, category, date, image: imagePath },
+      { title, content, category, image: imagePath },
       { new: true }
     );
 
