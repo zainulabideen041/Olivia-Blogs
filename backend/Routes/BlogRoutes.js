@@ -6,13 +6,27 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, "uploads/"); // Save to 'uploads/' directory
   },
   filename: (req, file, cb) => {
+    // Generate a unique filename based on current timestamp and original file name
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
-const upload = multer({ storage });
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+
+  if (!allowedTypes.includes(file.mimetype)) {
+    // Reject non-image files
+    return cb(new Error("Only image files (jpg, png, gif) are allowed"), false);
+  }
+  cb(null, true); // Accept the file
+};
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
+});
 
 //ROUTE TO CREATE NEW BLOG
 router.post("/create/:id", upload.single("image"), async (req, res) => {
@@ -34,7 +48,12 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
     }
 
     const date = Date.now();
-    const imagePath = req.file ? req.file.path : null;
+
+    // Check if image is uploaded
+    let imagePath = null;
+    if (req.file) {
+      imagePath = req.file.path; // Get the image path only if the file is uploaded
+    }
 
     // Create the blog
     const newBlog = await Blog.create({
@@ -44,18 +63,18 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
       date,
       category,
       authorId: id,
-      image: imagePath,
+      image: imagePath, // Set image to null if no image is uploaded
     });
 
     // Increment author's blog count safely
-    authorExists.totalBlogs = totalBlogs + 1;
+    authorExists.totalBlogs = authorExists.totalBlogs + 1;
     await authorExists.save();
 
     res
       .status(201)
       .json({ message: "Blog created successfully", blog: newBlog });
   } catch (error) {
-    console.error("Error creating blog:", error.message);
+    console.log("Error creating blog:", error.message);
     res
       .status(500)
       .json({ message: "Failed to create blog", error: error.message });
@@ -123,13 +142,24 @@ router.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const authorId = await Blog.findById(id, "authorId");
+    // Find the blog and get the authorId from the blog
+    const blog = await Blog.findById(id);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    const authorId = blog.authorId; // Use the authorId from the blog
     const author = await Author.findById(authorId);
+
     if (!author) {
       return res.status(404).json({ message: "Author not found" });
     }
-    author.totalBlogs = totalBlogs - 1;
-    author.save();
+
+    // Decrement the totalBlogs count for the author
+    author.totalBlogs = author.totalBlogs - 1;
+    await author.save(); // Ensure saving the updated author data
+
+    // Delete the blog post
     const deletedBlog = await Blog.findByIdAndDelete(id);
 
     if (!deletedBlog) {

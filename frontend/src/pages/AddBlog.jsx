@@ -12,7 +12,7 @@ const AddBlog = () => {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
 
@@ -51,19 +51,6 @@ const AddBlog = () => {
 
     fetchCategories();
   }, []);
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file && !["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
-      Swal.fire({
-        icon: "warning",
-        title: "Invalid File Type",
-        text: "Please upload a valid image (JPEG, JPG, PNG).",
-      });
-      return;
-    }
-    setImage(file);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -193,7 +180,7 @@ const AddBlog = () => {
       <input
         id="thumbnail"
         type="file"
-        onChange={handleImageChange}
+        onChange={(e) => setImage(e.target.files[0])}
         style={{
           width: "100%",
           padding: "10px",
