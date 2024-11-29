@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-multi-carousel";
+import axiosInstance from "../components/axiosInstance";
 import "react-multi-carousel/lib/styles.css";
 import { IoMdArrowForward } from "react-icons/io";
 import AiImg from "../assets/img2.jpg";
-import axios from "axios";
+import blogImg from "../assets/img3.jpg";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./style.css";
@@ -42,9 +43,7 @@ const Home = () => {
   useEffect(() => {
     const getBlogs = async () => {
       try {
-        const response = await axios.get(
-          "https://backend-umber-chi-47.vercel.app/blog/display"
-        );
+        const response = await axiosInstance.get("/blog/display");
         setBlogs(response.data || []);
       } catch (error) {
         console.error(error);
@@ -53,9 +52,7 @@ const Home = () => {
 
     const getCategories = async () => {
       try {
-        const response = await axios.get(
-          "https://backend-umber-chi-47.vercel.app/blog/categories"
-        );
+        const response = await axiosInstance.get("/blog/categories");
         setCategories(["All", ...(response.data || [])]);
       } catch (error) {
         console.error(error);
@@ -146,7 +143,8 @@ const Home = () => {
                 onClick={() => ViewBlog(blog._id)}
               >
                 <img
-                  src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
+                  // src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
+                  src={blogImg}
                   alt=""
                 />
                 <div className="card-content">

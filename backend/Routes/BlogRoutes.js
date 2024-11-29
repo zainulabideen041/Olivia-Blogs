@@ -80,7 +80,7 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
 });
 
 //ROUTE TO UPDATE EXISTING BLOG
-router.post("/update/:id", upload.single("image"), async (req, res) => {
+router.put("/update/:id", upload.single("image"), async (req, res) => {
   const id = req.params.id;
   const { title, content, category } = req.body;
 

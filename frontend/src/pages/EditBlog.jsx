@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import AxiosInstance from "../components/axiosInstance";
 import Swal from "sweetalert2";
-import axios from "axios";
 
 const EditBlog = () => {
+  const navigate = useNavigate();
+
   const { id } = useParams();
 
   const [title, setTitle] = useState("");
@@ -20,9 +22,8 @@ const EditBlog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await axios.get(
-          `https://backend-umber-chi-47.vercel.app/blog/blog/${id}`
-        );
+        const response = await AxiosInstance.get(`/blog/blog/${id}`);
+
         setTitle(response.data.title);
         setContent(response.data.content);
         setCategory(response.data.category);
@@ -45,18 +46,17 @@ const EditBlog = () => {
     setError(null);
     setSuccess(false);
 
-    console.log(image);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("category", category);
+    if (image) formData.append("image", image);
 
     try {
-      const response = await axios.post(
-        `https://backend-umber-chi-47.vercel.app/blog/update/${id}`,
-        {
-          title,
-          content,
-          category,
-          image,
-        }
-      );
+      const response = await AxiosInstance.put(`/blog/update/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log(response);
 
       Swal.fire({
         icon: "success",
@@ -70,9 +70,9 @@ const EditBlog = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: error.response
-          ? error.response.data.message
-          : "There was an error updating the blog. Please try again.",
+        text:
+          error.response?.data?.message ||
+          "There was an error updating the blog. Please try again.",
         confirmButtonText: "Okay",
       });
 

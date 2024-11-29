@@ -1,10 +1,10 @@
+import LoginStatus from "../components/authentication/loginStatus";
+import axiosInstance from "../components/axiosInstance";
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate } from "react-router-dom";
-import LoginStatus from "../components/authentication/loginStatus";
 import Swal from "sweetalert2";
-import axios from "axios";
 
 const AddBlog = () => {
   const [AuthorId, setAuthorId] = useState("");
@@ -34,9 +34,7 @@ const AddBlog = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
-          "https://backend-umber-chi-47.vercel.app/blog/categories"
-        );
+        const response = await axiosInstance.get("/blog/categories");
         setCategories(response.data || []);
       } catch (error) {
         Swal.fire({
@@ -81,13 +79,9 @@ const AddBlog = () => {
     if (image) formData.append("image", image);
 
     try {
-      await axios.post(
-        `https://backend-umber-chi-47.vercel.app/blog/create/${AuthorId}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      await axiosInstance.post(`/blog/create/${AuthorId}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       Swal.fire({
         icon: "success",

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import blogImg from "../assets/img3.jpg";
+import axiosInstance from "../components/axiosInstance";
 import "aos/dist/aos.css";
-import axios from "axios";
 import AOS from "aos";
 import "./style.css";
 
@@ -18,9 +19,7 @@ const Blogs = () => {
   useEffect(() => {
     const getBlogs = async () => {
       try {
-        const response = await axios.get(
-          "https://backend-umber-chi-47.vercel.app/blog/display"
-        );
+        const response = await axiosInstance.get("/blog/display");
         let allBlogs = response.data || [];
         if (authorId) {
           // Filter blogs by authorId if provided
@@ -72,7 +71,8 @@ const Blogs = () => {
                 <p>{stripHtmlTags(blog.content.slice(0, 50))}</p>
               </div>
               <img
-                src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
+                // src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
+                src={blogImg}
                 alt={blog.title}
               />
             </div>
