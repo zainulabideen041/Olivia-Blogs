@@ -94,7 +94,7 @@ const Dashboard = () => {
       <div className="nav">
         <h2>Your Blogs</h2>
         <Link to="/create-blog">
-          <button>Create New Blog</button>
+          <button className="create-blog-btn">Create New Blog</button>
         </Link>
       </div>
       {blogs.length === 0 ? (

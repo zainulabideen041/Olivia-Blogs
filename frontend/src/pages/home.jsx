@@ -4,9 +4,9 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { IoMdArrowForward } from "react-icons/io";
 import AiImg from "../assets/img2.jpg";
-import "aos/dist/aos.css";
 import axios from "axios";
 import AOS from "aos";
+import "aos/dist/aos.css";
 import "./style.css";
 
 const Home = () => {

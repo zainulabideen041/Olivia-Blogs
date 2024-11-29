@@ -24,6 +24,11 @@ app.use("/user", require("./Routes/LoggedUser"));
 // BLOG ROUTES
 app.use("/blog", require("./Routes/BlogRoutes"));
 
+//DEFAULT ROUTE
+app.get("/", (req, res) => {
+  res.send("Server is running...");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port http://localhost:${PORT}`);
 });

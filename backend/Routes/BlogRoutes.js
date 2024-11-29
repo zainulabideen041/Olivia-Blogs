@@ -33,11 +33,6 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
       return res.status(404).json({ message: "Author not found" });
     }
 
-    // Increment author's blog count safely
-    const totalBlogs = authorExists.totalBlogs || 0;
-    authorExists.totalBlogs = totalBlogs + 1;
-    await authorExists.save();
-
     const date = Date.now();
     const imagePath = req.file ? req.file.path : null;
 
@@ -51,6 +46,10 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
       authorId: id,
       image: imagePath,
     });
+
+    // Increment author's blog count safely
+    authorExists.totalBlogs = totalBlogs + 1;
+    await authorExists.save();
 
     res
       .status(201)
@@ -125,10 +124,13 @@ router.delete("/delete/:id", async (req, res) => {
 
   try {
     const authorId = await Blog.findById(id, "authorId");
-    const deletedBlog = await Blog.findByIdAndDelete(id);
     const author = await Author.findById(authorId);
+    if (!author) {
+      return res.status(404).json({ message: "Author not found" });
+    }
     author.totalBlogs = totalBlogs - 1;
     author.save();
+    const deletedBlog = await Blog.findByIdAndDelete(id);
 
     if (!deletedBlog) {
       return res.status(404).json({ message: "Blog not found" });

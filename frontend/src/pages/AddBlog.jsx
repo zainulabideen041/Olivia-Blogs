@@ -27,7 +27,7 @@ const AddBlog = () => {
     };
 
     fetchUser();
-  }, [Location]);
+  }, []);
 
   const navigate = useNavigate();
 

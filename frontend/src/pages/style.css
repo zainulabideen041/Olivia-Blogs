@@ -437,6 +437,18 @@ p {
   align-items: center;
   justify-content: space-between;
 }
+.nav .create-blog-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  transition: 0.2s ease;
+  background-color: transparent;
+  border: 1px solid rgb(190, 190, 190);
+}
+.nav .create-blog-btn:hover {
+  background-color: rgb(150, 22, 255);
+  color: #fff;
+}
 
 .author-dashboard {
   padding: 0px 20px;
