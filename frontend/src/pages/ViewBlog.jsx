@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import './style.css'
 import axios from "axios";
 
 const ViewBlog = () => {
@@ -20,9 +21,17 @@ const ViewBlog = () => {
     getBlog();
   }, [id]);
   return (
-    <div style={{ width: "80%", margin: "0 auto", paddingTop: "20px" }}>
-      <h1>{blog.title}</h1>
-      <div className="blog-content-view"
+    <div
+      style={{
+        width: "80%",
+        margin: "0 auto",
+        paddingTop: "20px",
+        color: "black",
+      }}
+    >
+      <h1 style={{ color: "black" }}>{blog.title}</h1>
+      <div
+        className="blog-content-view"
         dangerouslySetInnerHTML={{ __html: blog.content }}
       />
     </div>

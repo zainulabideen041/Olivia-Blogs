@@ -12,6 +12,7 @@ const EditBlog = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
 
@@ -20,6 +21,19 @@ const EditBlog = () => {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await AxiosInstance.get("/blog/categories");
+        setCategories(response.data || []);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to fetch categories. Please try again later.",
+        });
+      }
+    };
+
     const fetchBlog = async () => {
       try {
         const response = await AxiosInstance.get(`/blog/blog/${id}`);
@@ -34,6 +48,7 @@ const EditBlog = () => {
         setError(error.message);
       }
     };
+    fetchCategories();
     fetchBlog();
   }, [id]);
 
@@ -103,20 +118,27 @@ const EditBlog = () => {
         }}
       />
       <label htmlFor="">Category: </label>
-      <input
-        type="text"
+      <select
+        id="category"
         value={category}
-        onChange={handleCategoryChange}
-        placeholder="Enter Blog Category"
+        onChange={(e) => setCategory(e.target.value)}
         style={{
           width: "100%",
           padding: "10px",
           marginBottom: "20px",
-          fontSize: "24px",
+          fontSize: "16px",
           border: "1px solid #ccc",
           borderRadius: "4px",
         }}
-      />
+        aria-label="Blog Category"
+      >
+        <option value="">Select a category</option>
+        {categories.map((cat, index) => (
+          <option key={index} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
 
       <label htmlFor="">Content: </label>
       {/* React Quill Editor */}

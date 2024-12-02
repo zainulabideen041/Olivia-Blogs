@@ -161,6 +161,7 @@ const AddBlog = () => {
       <ReactQuill
         value={content}
         onChange={(value) => setContent(value)}
+        placeholder="Write Blog Content here..."
         style={{
           height: "350px",
           background: "#f7f7f7",
