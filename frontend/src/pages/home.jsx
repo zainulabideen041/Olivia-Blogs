@@ -10,6 +10,10 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./style.css";
 
+import { tailChase } from "ldrs";
+
+tailChase.register();
+
 const Home = () => {
   const responsive = {
     superLargeDesktop: {
@@ -30,6 +34,7 @@ const Home = () => {
     },
   };
 
+  const [loading, setLoading] = useState(true);
   const [blogs, setBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -45,6 +50,7 @@ const Home = () => {
       try {
         const response = await axiosInstance.get("/blog/display");
         setBlogs(response.data || []);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -54,6 +60,7 @@ const Home = () => {
       try {
         const response = await axiosInstance.get("/blog/categories");
         setCategories(["All", ...(response.data || [])]);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -108,19 +115,25 @@ const Home = () => {
           pauseOnHover={true}
           className="category-slider"
         >
-          {categories.map((category) => (
-            <div
-              data-aos="fade-up"
-              key={category}
-              className={`category-item ${
-                selectedCategory === category ? "active" : ""
-              }`}
-              onClick={() => setSelectedCategory(category)}
-            >
-              <img src={AiImg} alt={category} />
-              <h3>{category}</h3>
+          {loading ? (
+            <div className="loader" style={{ height: "20vh" }}>
+              <l-tail-chase size="40" speed="1.75" color="black"></l-tail-chase>
             </div>
-          ))}
+          ) : (
+            categories.map((category) => (
+              <div
+                data-aos="fade-up"
+                key={category}
+                className={`category-item ${
+                  selectedCategory === category ? "active" : ""
+                }`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                <img src={AiImg} alt={category} />
+                <h3>{category}</h3>
+              </div>
+            ))
+          )}
         </Carousel>
         <hr />
       </div>
@@ -132,7 +145,11 @@ const Home = () => {
             : `Blogs in "${selectedCategory}"`}
         </h2>
         <div className="blog-cards">
-          {filteredBlogs.length === 0 ? (
+          {loading ? (
+            <div className="loader" style={{ height: "20vh" }}>
+              <l-tail-chase size="40" speed="1.75" color="black"></l-tail-chase>
+            </div>
+          ) : filteredBlogs.length === 0 ? (
             <div>No blogs found</div>
           ) : (
             filteredBlogs.slice(0, 8).map((blog) => (

@@ -5,8 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 import "./style.css";
+import { tailChase } from "ldrs";
+
+tailChase.register();
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
   const [authorId, setAuthorId] = useState("");
   const [blogs, setBlogs] = useState([]);
 
@@ -33,6 +37,7 @@ const Dashboard = () => {
             `https://backend-umber-chi-47.vercel.app/blog/author/blogs/${authorId}`
           );
           setBlogs(response.data);
+          setLoading(false);
         } catch (error) {
           console.log("Error fetching blogs:", error);
         }
@@ -90,62 +95,78 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="author-dashboard">
-      <div className="nav">
-        <h2>Your Blogs</h2>
-        <Link to="/create-blog">
-          <button className="create-blog-btn">Create New Blog</button>
-        </Link>
-      </div>
-      {blogs.length === 0 ? (
-        <div>You don't have any Blogs</div>
+    <>
+      {loading ? (
+        <div
+          className="loader"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "60vh",
+          }}
+        >
+          <l-tail-chase size="40" speed="1.75" color="black"></l-tail-chase>
+        </div>
       ) : (
-        <table className="blogs-cards">
-          <thead>
-            <tr>
-              <th>Thumbnail</th>
-              <th>Title</th>
-              <th>Content</th>
-              <th>Category</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {blogs.map((blog) => (
-              <tr key={blog._id}>
-                <td>
-                  <img
-                    src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
-                    alt={"Blog Thumbnail"}
-                  />
-                </td>
-                <td>{blog.title}</td>
-                <td>{stripHtmlTags(blog.content).slice(0, 50)}...</td>
-                <td>{blog.category}</td>
-                <td>
-                  {new Date(blog.date).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </td>
-                <td>
-                  <CiEdit
-                    onClick={() => handleEditBlog(blog._id)}
-                    className="action-icons edit-icon"
-                  />
-                  <CiTrash
-                    onClick={() => handleDelete(blog._id)}
-                    className="action-icons delete-icon"
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="author-dashboard">
+          <div className="nav">
+            <h2>Your Blogs</h2>
+            <Link to="/create-blog">
+              <button className="create-blog-btn">Create New Blog</button>
+            </Link>
+          </div>
+          {blogs.length === 0 ? (
+            <div>You don't have any Blogs</div>
+          ) : (
+            <table className="blogs-cards">
+              <thead>
+                <tr>
+                  <th>Thumbnail</th>
+                  <th>Title</th>
+                  <th>Content</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {blogs.map((blog) => (
+                  <tr key={blog._id}>
+                    <td>
+                      <img
+                        src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
+                        alt={"Blog Thumbnail"}
+                      />
+                    </td>
+                    <td>{blog.title}</td>
+                    <td>{stripHtmlTags(blog.content).slice(0, 50)}...</td>
+                    <td>{blog.category}</td>
+                    <td>
+                      {new Date(blog.date).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td>
+                      <CiEdit
+                        onClick={() => handleEditBlog(blog._id)}
+                        className="action-icons edit-icon"
+                      />
+                      <CiTrash
+                        onClick={() => handleDelete(blog._id)}
+                        className="action-icons delete-icon"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
