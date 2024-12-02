@@ -116,7 +116,15 @@ const Home = () => {
           className="category-slider"
         >
           {loading ? (
-            <div className="loader" style={{ height: "20vh" }}>
+            <div
+              className="loader"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "20vh",
+              }}
+            >
               <l-tail-chase size="40" speed="1.75" color="black"></l-tail-chase>
             </div>
           ) : (
