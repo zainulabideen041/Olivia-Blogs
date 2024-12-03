@@ -52,10 +52,6 @@ const EditBlog = () => {
     fetchBlog();
   }, [id]);
 
-  const handleTitleChange = (e) => setTitle(e.target.value);
-  const handleCategoryChange = (e) => setCategory(e.target.value);
-  const handleContentChange = (value) => setContent(value);
-
   const handleEdit = async () => {
     setLoading(true);
     setError(null);
@@ -71,7 +67,6 @@ const EditBlog = () => {
       const response = await AxiosInstance.put(`/blog/update/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(response);
 
       Swal.fire({
         icon: "success",
@@ -106,7 +101,7 @@ const EditBlog = () => {
       <input
         type="text"
         value={title}
-        onChange={handleTitleChange}
+        onChange={(e) => setTitle(e.target.value)}
         placeholder="Enter blog title"
         style={{
           width: "100%",
@@ -144,7 +139,7 @@ const EditBlog = () => {
       {/* React Quill Editor */}
       <ReactQuill
         value={content}
-        onChange={handleContentChange}
+        onChange={(e) => setContent(value)}
         style={{
           height: "350px",
           border: "1px solid #ccc",
@@ -176,6 +171,7 @@ const EditBlog = () => {
       <button
         className="create-blog-btn"
         onClick={handleEdit}
+        disabled={loading}
         style={{
           padding: "10px 20px",
           backgroundColor: "#4CAF50",

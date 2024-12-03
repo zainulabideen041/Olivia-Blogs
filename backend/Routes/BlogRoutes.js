@@ -3,31 +3,38 @@ const Blog = require("../Models/Blog");
 const Author = require("../Models/Author");
 const multer = require("multer");
 const router = express.Router();
+const cloudinary = require("cloudinary").v2;
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
+cloudinary.config({
+  cloud_name: "dnoi1telk",
+  api_key: "546623679463593",
+  api_secret: "HgFi6uxDPoqQKdkEaozTvmgVsTQ",
 });
-const fileFilter = (req, file, cb) => {
-  const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
 
-  if (!allowedTypes.includes(file.mimetype)) {
-    // Reject non-image files
-    return cb(new Error("Only image files (jpg, png, gif) are allowed"), false);
-  }
-  cb(null, true); // Accept the file
-};
-const upload = multer({
-  storage,
-  fileFilter,
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads/");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, `${Date.now()}-${file.originalname}`);
+//   },
+// });
+// const fileFilter = (req, file, cb) => {
+//   const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+
+//   if (!allowedTypes.includes(file.mimetype)) {
+//     // Reject non-image files
+//     return cb(new Error("Only image files (jpg, png, gif) are allowed"), false);
+//   }
+//   cb(null, true); // Accept the file
+// };
+// const upload = multer({
+//   storage,
+//   fileFilter,
+// });
 
 //ROUTE TO CREATE NEW BLOG
-router.post("/create/:id", upload.single("image"), async (req, res) => {
+router.post("/create/:id", async (req, res) => {
   const { title, content, category } = req.body;
   const { id } = req.params;
 
@@ -47,30 +54,25 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
 
     const date = Date.now();
 
-    // Check if image is uploaded
-    let imagePath = "";
-    if (req.file) {
-      imagePath = req.file.path; // Get the image path only if the file is uploaded
-    }
+    const file = req.files.image;
+    const result = await cloudinary.uploader.upload(file.tempFilePath);
 
     // Create the blog
-    const newBlog = await Blog.create({
+    await Blog.create({
       title,
       content,
       author: authorExists.username,
       date,
       category,
       authorId: id,
-      image: imagePath,
+      image: result.url,
     });
 
     // Increment author's blog count safely
     authorExists.totalBlogs = authorExists.totalBlogs + 1;
     await authorExists.save();
 
-    res
-      .status(201)
-      .json({ message: "Blog created successfully", blog: newBlog });
+    res.status(201).json({ message: "Blog created successfully" });
   } catch (error) {
     console.log("Error creating blog:", error.message);
     res
@@ -80,28 +82,58 @@ router.post("/create/:id", upload.single("image"), async (req, res) => {
 });
 
 //ROUTE TO UPDATE EXISTING BLOG
-router.put("/update/:id", upload.single("image"), async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   const id = req.params.id;
   const { title, content, category } = req.body;
 
-  const imagePath = req.file ? req.file.path : null;
+  // Handle the image upload if a new image is provided
+  if (req.files && req.files.image) {
+    const file = req.files.image;
+    try {
+      const result = await cloudinary.uploader.upload(file.tempFilePath);
 
-  try {
-    const updatedBlog = await Blog.findByIdAndUpdate(
-      id,
-      { title, content, category, image: imagePath },
-      { new: true }
-    );
+      const updatedBlog = await Blog.findByIdAndUpdate(id, {
+        title,
+        content,
+        category,
+        image: result.url,
+      });
 
-    if (!updatedBlog) {
-      return res.status(404).json({ message: "Blog not found" });
+      if (!updatedBlog) {
+        return res.status(404).json({ message: "Blog not found" });
+      }
+
+      return res.json({
+        message: "Blog updated successfully",
+        blog: updatedBlog,
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Failed to update blog", error: error.message });
     }
+  } else {
+    // In case no new image is provided
+    try {
+      const updatedBlog = await Blog.findByIdAndUpdate(
+        id,
+        { title, content, category },
+        { new: true }
+      );
 
-    res.json({ message: "Blog updated successfully", blog: updatedBlog });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to update blog", error: error.message });
+      if (!updatedBlog) {
+        return res.status(404).json({ message: "Blog not found" });
+      }
+
+      return res.json({
+        message: "Blog updated successfully",
+        blog: updatedBlog,
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Failed to update blog", error: error.message });
+    }
   }
 });
 
