@@ -88,7 +88,7 @@ const Blogs = () => {
                 >
                   <div className="blog-content">
                     <h3>{blog.title}</h3>
-                    <p>{stripHtmlTags(blog.content.slice(0, 50))}</p>
+                    <p>{stripHtmlTags(blog.content.slice(0, 100))}</p>
                   </div>
                   <img
                     // src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}

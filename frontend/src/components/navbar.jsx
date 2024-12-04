@@ -123,39 +123,45 @@ const Navbar = ({ LoginModal, RegisterModal, isScrolled, ProfileModal }) => {
       {/* Sidebar */}
       {sidebarOpen && (
         <div className="sidebar">
+          <h2 style={{ fontSize: "15px", color: "#fff", textAlign: "center" }}>
+            Author Dashboard
+          </h2>
           <IoCloseOutline className="close-icon" onClick={toggleSidebar} />
           <ul className="sidebar-items">
-            <NavLink to="/" onClick={toggleSidebar}>
-              <li>Home</li>
-            </NavLink>
-            <NavLink to="/blogs" onClick={toggleSidebar}>
-              <li>Blogs</li>
-            </NavLink>
-            <NavLink to="/authors" onClick={toggleSidebar}>
-              <li>Authors</li>
-            </NavLink>
             {!loggedin && (
               <>
-                <li>
-                  <button
-                    type="button"
-                    onClick={handleLogin}
-                    className="sidebar-btn"
-                  >
-                    Login
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={handleRegister}
-                    className="sidebar-btn"
-                  >
-                    Register
-                  </button>
-                </li>
+                <NavLink to="/" onClick={toggleSidebar}>
+                  <li>Home</li>
+                </NavLink>
+                <NavLink to="/blogs" onClick={toggleSidebar}>
+                  <li>Blogs</li>
+                </NavLink>
+                <NavLink to="/authors" onClick={toggleSidebar}>
+                  <li>Authors</li>
+                </NavLink>
+                <button
+                  type="button"
+                  onClick={handleLogin}
+                  className="sidebar-btn"
+                >
+                  Login
+                </button>
+                <button
+                  type="button"
+                  onClick={handleRegister}
+                  className="sidebar-btn"
+                >
+                  Register
+                </button>
               </>
             )}
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="sidebar-btn"
+            >
+              Logout
+            </button>
           </ul>
         </div>
       )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LoginStatus from "./components/authentication/loginStatus";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Register from "./components/authentication/Register";
 import Login from "./components/authentication/Login";
 import Profile from "./components/Profile";
@@ -94,6 +94,7 @@ const App = () => {
           <Route path="/create-blog" element={<AddBlog />} />
           <Route path="/edit-blog/:id" element={<EditBlogs />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>
       ) : (
         <Routes>
@@ -101,6 +102,7 @@ const App = () => {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blog/:id" element={<ViewBlog />} />
           <Route path="/authors" element={<Authors />} />
+          <Route path="/dashboard" element={<Navigate to="/" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       )}

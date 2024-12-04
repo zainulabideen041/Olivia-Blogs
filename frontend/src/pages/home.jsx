@@ -6,6 +6,7 @@ import "react-multi-carousel/lib/styles.css";
 import { IoMdArrowForward } from "react-icons/io";
 import AiImg from "../assets/img2.jpg";
 import blogImg from "../assets/img3.jpg";
+import { Typewriter } from "react-simple-typewriter";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./style.css";
@@ -90,11 +91,28 @@ const Home = () => {
   return (
     <main className="home-section">
       <div className="hero-section">
-        <h2 data-aos="fade-up">Welcome to Olivia Blog</h2>
+        <h2 data-aos="fade-up">
+          Welcome to&nbsp;
+          <Typewriter
+            words={[
+              "Olivia Blog",
+              "Blogs World",
+              "Your Learning Hub",
+              "Stories That Matter",
+              "Your Daily Reads",
+            ]}
+            loop={true}
+            cursor
+            cursorStyle="_"
+            typeSpeed={200}
+            deleteSpeed={80}
+            delaySpeed={1000}
+          />
+        </h2>
         <p data-aos="fade-up">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonummy
-          semper nisi. Aenean eget dui id velit placerat dignissim. Vestibulum
-          auctor dapibus neque.
+          Dive into a world of knowledge, inspiration, and creativity! Discover
+          blogs on topics you love, learn something new every day, and explore a
+          variety of categories.
         </p>
         <button className="hero-btn" onClick={scrollToBlogs} data-aos="fade-up">
           Read More <IoMdArrowForward className="arrow-icon" />

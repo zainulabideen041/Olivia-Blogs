@@ -171,21 +171,23 @@ const AddBlog = () => {
         }}
       />
 
-      <label htmlFor="thumbnail">Thumbnail:</label>
-      <input
-        id="thumbnail"
-        type="file"
-        onChange={(e) => setImage(e.target.files[0])}
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "20px",
-          fontSize: "16px",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-        }}
-        aria-label="Blog Thumbnail"
-      />
+      <div className="add-thumbnail" style={{ marginTop: "80px" }}>
+        <label htmlFor="thumbnail">Thumbnail:</label>
+        <input
+          id="thumbnail"
+          type="file"
+          onChange={(e) => setImage(e.target.files[0])}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "20px",
+            fontSize: "16px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+          }}
+          aria-label="Blog Thumbnail"
+        />
+      </div>
 
       <button
         className="create-blog-btn"
@@ -197,10 +199,25 @@ const AddBlog = () => {
           color: "white",
           border: "none",
           borderRadius: "4px",
+          marginBottom: "20px",
           cursor: loading ? "not-allowed" : "pointer",
         }}
       >
         {loading ? "Creating..." : "Create Blog"}
+      </button>
+      <button
+        style={{
+          padding: "10px 20px",
+          backgroundColor: loading ? "#ccc" : "#4CAF50",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          marginBottom: "20px",
+          marginLeft: "20px",
+        }}
+        onClick={() => navigate("/dashboard")}
+      >
+        Back
       </button>
     </div>
   );

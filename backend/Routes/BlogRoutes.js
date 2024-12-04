@@ -54,25 +54,34 @@ router.post("/create/:id", async (req, res) => {
 
     const date = Date.now();
 
-    const file = req.files.image;
-    const result = await cloudinary.uploader.upload(file.tempFilePath);
+    let imageUrl = null; // Initialize imageUrl as null
 
-    // Create the blog
-    await Blog.create({
+    // Check if the image file exists
+    if (req.files && req.files.image) {
+      const file = req.files.image;
+      const result = await cloudinary.uploader.upload(file.tempFilePath);
+      imageUrl = result.url; // If image exists, upload to Cloudinary and get the URL
+    }
+
+
+    // Create the blog (with or without image)
+    const newBlog = await Blog.create({
       title,
       content,
       author: authorExists.username,
       date,
       category,
       authorId: id,
-      image: result.url,
+      image: imageUrl, // If no image, imageUrl will be null
     });
 
     // Increment author's blog count safely
     authorExists.totalBlogs = authorExists.totalBlogs + 1;
     await authorExists.save();
 
-    res.status(201).json({ message: "Blog created successfully" });
+    res
+      .status(201)
+      .json({ message: "Blog created successfully", blog: newBlog });
   } catch (error) {
     console.log("Error creating blog:", error.message);
     res

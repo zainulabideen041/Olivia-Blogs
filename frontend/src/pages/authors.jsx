@@ -72,7 +72,7 @@ const Authors = () => {
                     <span className="card-content-date">
                       Total Blogs: {author.totalBlogs}
                     </span>
-                    <button onClick={() => ViewAuthorBlogs(author._id)}>
+                    <button className="author-blog-btn" onClick={() => ViewAuthorBlogs(author._id)}>
                       View Blogs
                     </button>
                   </div>

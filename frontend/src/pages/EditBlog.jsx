@@ -64,7 +64,7 @@ const EditBlog = () => {
     if (image) formData.append("image", image);
 
     try {
-      const response = await AxiosInstance.put(`/blog/update/${id}`, formData, {
+      await AxiosInstance.put(`/blog/update/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -107,7 +107,7 @@ const EditBlog = () => {
           width: "100%",
           padding: "10px",
           marginBottom: "20px",
-          fontSize: "24px",
+          fontSize: "15px",
           border: "1px solid #ccc",
           borderRadius: "4px",
         }}
@@ -121,7 +121,7 @@ const EditBlog = () => {
           width: "100%",
           padding: "10px",
           marginBottom: "20px",
-          fontSize: "16px",
+          fontSize: "13px",
           border: "1px solid #ccc",
           borderRadius: "4px",
         }}
@@ -150,19 +150,21 @@ const EditBlog = () => {
         }}
       />
 
-      <label htmlFor="">Thumbnail:</label>
-      <input
-        type="file"
-        onChange={(e) => setImage(e.target.files[0])}
-        style={{
-          width: "100%",
-          padding: "10px",
-          marginBottom: "20px",
-          fontSize: "15px",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-        }}
-      />
+      <div className="thumbnail-edit" style={{ marginTop: "70px" }}>
+        <label htmlFor="">Thumbnail:</label>
+        <input
+          type="file"
+          onChange={(e) => setImage(e.target.files[0])}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "20px",
+            fontSize: "15px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+          }}
+        />
+      </div>
 
       {loading && <p style={{ color: "black" }}>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -183,6 +185,20 @@ const EditBlog = () => {
         }}
       >
         Edit
+      </button>
+      <button
+        style={{
+          padding: "10px 20px",
+          backgroundColor: loading ? "#ccc" : "#4CAF50",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          marginBottom: "20px",
+          marginLeft: "20px",
+        }}
+        onClick={() => navigate("/dashboard")}
+      >
+        Back
       </button>
     </div>
   );

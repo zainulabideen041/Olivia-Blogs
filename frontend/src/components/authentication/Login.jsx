@@ -39,7 +39,6 @@ const Login = ({ closeModal }) => {
 
       Navigate("/dashboard");
     } catch (error) {
-
       // Update the loading toast to an error message
       toast.update(loadingToast, {
         render:
