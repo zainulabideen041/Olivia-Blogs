@@ -434,6 +434,7 @@ p {
   .blog-grid-item {
     grid-column: span 1;
     padding: 15px;
+    margin: 5px 0px;
   }
 
   .blog-grid-item img {
