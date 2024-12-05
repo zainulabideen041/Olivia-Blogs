@@ -126,8 +126,9 @@ const Home = () => {
       <div className="category-section">
         <h2 data-aos="fade-up">Explore Popular Categories</h2>
         <p data-aos="fade-up">
-          Explore popular categories Lorem ipsum dolor sit amet Lorem ipsum
-          dolor sit.. Scroll Vertically to view some more available Categories.
+          Discover a range of topics on our blog, from lifestyle and tech to
+          health and travel. Slide vertically to find more of what interests
+          you!
         </p>
         <Carousel
           responsive={responsive}
