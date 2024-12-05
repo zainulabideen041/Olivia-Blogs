@@ -16,10 +16,21 @@ import { tailChase } from "ldrs";
 tailChase.register();
 
 function stripHtmlTags(htmlString) {
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = htmlString;
-  return tempDiv.textContent || tempDiv.innerText || "";
+  // Remove all image tags
+  htmlString = htmlString.replace(/<img[^>]*>/g, "");
+
+  // Remove all HTML tags except for text content
+  htmlString = htmlString.replace(/<\/?[^>]+(>|$)/g, "");
+
+  // Replace any instances of &nbsp; (non-breaking spaces) with a regular space
+  htmlString = htmlString.replace(/&nbsp;/g, " ");
+
+  // Trim leading and trailing spaces and then get the first 100 characters of the content
+  const firstText = htmlString.trim().slice(0, 100);
+
+  return firstText;
 }
+
 const Home = () => {
   const responsive = {
     superLargeDesktop: {
