@@ -15,6 +15,11 @@ import { tailChase } from "ldrs";
 
 tailChase.register();
 
+function stripHtmlTags(htmlString) {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = htmlString;
+  return tempDiv.textContent || tempDiv.innerText || "";
+}
 const Home = () => {
   const responsive = {
     superLargeDesktop: {
@@ -199,11 +204,7 @@ const Home = () => {
                     })}
                   </span>
                   <h3>{blog.title}</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Fugiat, architecto. Lorem ipsum dolor, sit amet consectetur
-                    adipisicing elit. Quos, dolorem!
-                  </p>
+                  <p>{stripHtmlTags(blog.content).slice(0, 50)}...</p>
                   <p>Author: {blog.author}</p>
                 </div>
               </div>
