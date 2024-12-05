@@ -212,11 +212,6 @@ p {
 }
 .card .card-content p {
   color: black !important;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* Number of lines before truncating */
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
   padding: 5px;
 }
 

@@ -25,10 +25,8 @@ function stripHtmlTags(htmlString) {
   // Replace any instances of &nbsp; (non-breaking spaces) with a regular space
   htmlString = htmlString.replace(/&nbsp;/g, " ");
 
-  // Trim leading and trailing spaces and then get the first 100 characters of the content
-  const firstText = htmlString.trim().slice(0, 100);
-
-  return firstText;
+  // Trim leading and trailing spaces
+  return htmlString.trim();
 }
 
 const Home = () => {
