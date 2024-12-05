@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import LoginStatus from "../components/authentication/loginStatus";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
+import blogImg from "../assets/img3.jpg";
 import Swal from "sweetalert2";
 import axios from "axios";
 import "./style.css";
@@ -65,7 +66,7 @@ const Dashboard = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await axios.delete(
+        await axios.delete(
           `https://backend-umber-chi-47.vercel.app/blog/delete/${id}`
         );
 
@@ -134,10 +135,7 @@ const Dashboard = () => {
                 {blogs.map((blog) => (
                   <tr key={blog._id}>
                     <td>
-                      <img
-                        src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
-                        alt={"Blog Thumbnail"}
-                      />
+                      <img src={blogImg} alt={"Blog Thumbnail"} />
                     </td>
                     <td>{blog.title}</td>
                     <td>{stripHtmlTags(blog.content).slice(0, 50)}...</td>
