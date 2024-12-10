@@ -206,7 +206,7 @@ const EditBlog = () => {
         disabled={loading}
         style={{
           padding: "10px 20px",
-          backgroundColor: "#4CAF50",
+          backgroundColor: loading ? "#ccc" : "#4CAF50",
           color: "white",
           margin: "10px",
           border: "none",
@@ -219,7 +219,6 @@ const EditBlog = () => {
       <button
         style={{
           padding: "10px 20px",
-          backgroundColor: loading ? "#ccc" : "#4CAF50",
           color: "white",
           border: "none",
           borderRadius: "4px",
