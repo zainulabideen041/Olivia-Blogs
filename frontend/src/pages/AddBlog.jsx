@@ -89,14 +89,15 @@ const AddBlog = () => {
 
     const imageUrl = cloudinaryResponse.secure_url;
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("category", category);
-    formData.append("image", imageUrl);
+    const values = {
+      title,
+      content,
+      category,
+      image: imageUrl,
+    };
 
     try {
-      await axiosInstance.post(`/blog/create/${AuthorId}`, formData);
+      await axiosInstance.post(`/blog/create/${AuthorId}`, values);
 
       Swal.fire({
         icon: "success",
