@@ -720,6 +720,35 @@ p {
   color: black !important; /* Ensures headers are always black */
 }
 
+.blog-content-view {
+  margin: 20px 0px;
+}
+
 .blog-content-view p {
   color: black !important;
+}
+
+/* //blog view page  */
+
+.social-icon {
+  margin: 5px;
+  font-size: 25px;
+  color: #5a5a5a;
+}
+
+.social-icon:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.blog-image-thumbnail {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.blog-image-thumbnail img {
+  width: 100%;
+  height: 100%;
 }

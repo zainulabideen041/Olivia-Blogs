@@ -202,7 +202,7 @@ const Home = () => {
               >
                 <img
                   // src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
-                  src={blogImg}
+                  src={blog.image}
                   alt=""
                 />
                 <div className="card-content">
