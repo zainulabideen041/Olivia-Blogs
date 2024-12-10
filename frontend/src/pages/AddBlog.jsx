@@ -1,9 +1,10 @@
 import LoginStatus from "../components/authentication/loginStatus";
 import axiosInstance from "../components/axiosInstance";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Cloudinary from "../utils/cloudinary";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddBlog = () => {
@@ -70,18 +71,32 @@ const AddBlog = () => {
       });
       return;
     }
-
     setLoading(true);
+
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", Cloudinary.upload_preset);
+    data.append("cloud_name", Cloudinary.cloud_name);
+
+    const cloudinaryResponse = await fetch(Cloudinary.api, {
+      method: "POST",
+      body: data,
+    }).then((res) => res.json());
+
+    if (!cloudinaryResponse.secure_url) {
+      throw new Error("Cloudinary upload failed");
+    }
+
+    const imageUrl = cloudinaryResponse.secure_url;
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
     formData.append("category", category);
-    if (image) formData.append("image", image);
+    formData.append("image", imageUrl);
 
     try {
-      await axiosInstance.post(`/blog/create/${AuthorId}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await axiosInstance.post(`/blog/create/${AuthorId}`, formData);
 
       Swal.fire({
         icon: "success",

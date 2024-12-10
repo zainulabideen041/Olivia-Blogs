@@ -1,15 +1,7 @@
 const express = require("express");
 const Blog = require("../Models/Blog");
 const Author = require("../Models/Author");
-const multer = require("multer");
 const router = express.Router();
-const cloudinary = require("cloudinary").v2;
-
-cloudinary.config({
-  cloud_name: "dnoi1telk",
-  api_key: "546623679463593",
-  api_secret: "HgFi6uxDPoqQKdkEaozTvmgVsTQ",
-});
 
 // const storage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -35,7 +27,7 @@ cloudinary.config({
 
 //ROUTE TO CREATE NEW BLOG
 router.post("/create/:id", async (req, res) => {
-  const { title, content, category } = req.body;
+  const { title, content, category, image } = req.body;
   const { id } = req.params;
 
   try {
@@ -54,16 +46,6 @@ router.post("/create/:id", async (req, res) => {
 
     const date = Date.now();
 
-    let imageUrl = null; // Initialize imageUrl as null
-
-    // Check if the image file exists
-    if (req.files && req.files.image) {
-      const file = req.files.image;
-      const result = await cloudinary.uploader.upload(file.tempFilePath);
-      imageUrl = result.url; // If image exists, upload to Cloudinary and get the URL
-    }
-
-
     // Create the blog (with or without image)
     const newBlog = await Blog.create({
       title,
@@ -72,7 +54,7 @@ router.post("/create/:id", async (req, res) => {
       date,
       category,
       authorId: id,
-      image: imageUrl, // If no image, imageUrl will be null
+      image,
     });
 
     // Increment author's blog count safely
