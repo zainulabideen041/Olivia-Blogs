@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import AxiosInstance from "../components/axiosInstance";
+import "react-quill/dist/quill.snow.css";
+import Cloudinary from "../utils/cloudinary";
+import ReactQuill from "react-quill";
 import Swal from "sweetalert2";
 
 const EditBlog = () => {
@@ -57,16 +58,31 @@ const EditBlog = () => {
     setError(null);
     setSuccess(false);
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("category", category);
-    if (image) formData.append("image", image);
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", Cloudinary.upload_preset);
+    data.append("cloud_name", Cloudinary.cloud_name);
+
+    const cloudinaryResponse = await fetch(Cloudinary.api, {
+      method: "POST",
+      body: data,
+    }).then((res) => res.json());
+
+    if (!cloudinaryResponse.secure_url) {
+      throw new Error("Cloudinary upload failed");
+    }
+
+    const imageUrl = cloudinaryResponse.secure_url;
+
+    const values = {
+      title,
+      content,
+      category,
+      image: imageUrl,
+    };
 
     try {
-      await AxiosInstance.put(`/blog/update/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await AxiosInstance.put(`/blog/update/${id}`, values);
 
       Swal.fire({
         icon: "success",
@@ -139,7 +155,7 @@ const EditBlog = () => {
       {/* React Quill Editor */}
       <ReactQuill
         value={content}
-        onChange={(e) => setContent(value)}
+        onChange={(newValue) => setContent(newValue)}
         style={{
           height: "350px",
           border: "1px solid #ccc",

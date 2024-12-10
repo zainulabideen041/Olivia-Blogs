@@ -3,28 +3,6 @@ const Blog = require("../Models/Blog");
 const Author = require("../Models/Author");
 const router = express.Router();
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads/");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, `${Date.now()}-${file.originalname}`);
-//   },
-// });
-// const fileFilter = (req, file, cb) => {
-//   const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
-
-//   if (!allowedTypes.includes(file.mimetype)) {
-//     // Reject non-image files
-//     return cb(new Error("Only image files (jpg, png, gif) are allowed"), false);
-//   }
-//   cb(null, true); // Accept the file
-// };
-// const upload = multer({
-//   storage,
-//   fileFilter,
-// });
-
 //ROUTE TO CREATE NEW BLOG
 router.post("/create/:id", async (req, res) => {
   const { title, content, category, image } = req.body;
@@ -75,56 +53,27 @@ router.post("/create/:id", async (req, res) => {
 //ROUTE TO UPDATE EXISTING BLOG
 router.put("/update/:id", async (req, res) => {
   const id = req.params.id;
-  const { title, content, category } = req.body;
+  const { title, content, category, image } = req.body;
 
-  // Handle the image upload if a new image is provided
-  if (req.files && req.files.image) {
-    const file = req.files.image;
-    try {
-      const result = await cloudinary.uploader.upload(file.tempFilePath);
+  try {
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      id,
+      { title, content, category, image },
+      { new: true }
+    );
 
-      const updatedBlog = await Blog.findByIdAndUpdate(id, {
-        title,
-        content,
-        category,
-        image: result.url,
-      });
-
-      if (!updatedBlog) {
-        return res.status(404).json({ message: "Blog not found" });
-      }
-
-      return res.json({
-        message: "Blog updated successfully",
-        blog: updatedBlog,
-      });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ message: "Failed to update blog", error: error.message });
+    if (!updatedBlog) {
+      return res.status(404).json({ message: "Blog not found" });
     }
-  } else {
-    // In case no new image is provided
-    try {
-      const updatedBlog = await Blog.findByIdAndUpdate(
-        id,
-        { title, content, category },
-        { new: true }
-      );
 
-      if (!updatedBlog) {
-        return res.status(404).json({ message: "Blog not found" });
-      }
-
-      return res.json({
-        message: "Blog updated successfully",
-        blog: updatedBlog,
-      });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ message: "Failed to update blog", error: error.message });
-    }
+    return res.json({
+      message: "Blog updated successfully",
+      blog: updatedBlog,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to update blog", error: error.message });
   }
 });
 
@@ -219,6 +168,7 @@ router.get("/categories", async (req, res) => {
     "Development",
     "Education",
     "Science/Tech",
+    "Jokes",
     "Social Media",
     "Religion",
     "Music",
@@ -232,6 +182,8 @@ router.get("/categories", async (req, res) => {
     "Relationships",
     "Family",
     "Drugs",
+    "Testing",
+    "Fun",
   ];
   res.json(categories);
 });

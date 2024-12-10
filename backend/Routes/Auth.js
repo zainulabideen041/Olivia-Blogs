@@ -3,19 +3,8 @@ const User = require("../Models/Author");
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
 const router = express.Router();
-const multer = require("multer");
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-const upload = multer({ storage });
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -67,17 +56,16 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.put("/edit/:id", upload.single("image"), async (req, res) => {
-  const { username, email } = req.body;
+router.put("/edit/:id", async (req, res) => {
+  const { username, email, image } = req.body;
   const { id } = req.params;
   if (!username && !email) {
     return res.status(400).json({ message: "Username or email is required" });
   }
-  const imagePath = req.file ? req.file.path : null;
   const UpdateUser = await User.findByIdAndUpdate(id, {
     username,
     email,
-    image: imagePath,
+    image,
   });
 
   if (!UpdateUser) {

@@ -135,7 +135,7 @@ const Dashboard = () => {
                 {blogs.map((blog) => (
                   <tr key={blog._id}>
                     <td>
-                      <img src={blogImg} alt={"Blog Thumbnail"} />
+                      <img src={blog.image} alt={"Blog Thumbnail"} />
                     </td>
                     <td>{blog.title}</td>
                     <td>{stripHtmlTags(blog.content).slice(0, 50)}...</td>
