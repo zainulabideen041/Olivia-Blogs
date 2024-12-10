@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 
 const EditBlog = () => {
   const navigate = useNavigate();
-
   const { id } = useParams();
 
   const [title, setTitle] = useState("");
@@ -16,7 +15,7 @@ const EditBlog = () => {
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [image, setImage] = useState(null);
-
+  const [imageUrl, setImageUrl] = useState(""); // State to hold the existing image URL
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -38,10 +37,10 @@ const EditBlog = () => {
     const fetchBlog = async () => {
       try {
         const response = await AxiosInstance.get(`/blog/blog/${id}`);
-
         setTitle(response.data.title);
         setContent(response.data.content);
         setCategory(response.data.category);
+        setImageUrl(response.data.image); // Set the existing image URL
         setLoading(false);
         setSuccess(true);
       } catch (error) {
@@ -49,6 +48,7 @@ const EditBlog = () => {
         setError(error.message);
       }
     };
+
     fetchCategories();
     fetchBlog();
   }, [id]);
@@ -58,27 +58,33 @@ const EditBlog = () => {
     setError(null);
     setSuccess(false);
 
-    const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", Cloudinary.upload_preset);
-    data.append("cloud_name", Cloudinary.cloud_name);
+    // If a new image is selected, upload it to Cloudinary; otherwise, use the existing image URL
+    let imageUrlToUse = imageUrl;
 
-    const cloudinaryResponse = await fetch(Cloudinary.api, {
-      method: "POST",
-      body: data,
-    }).then((res) => res.json());
+    if (image) {
+      // If a new image is selected, upload it to Cloudinary
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", Cloudinary.upload_preset);
+      data.append("cloud_name", Cloudinary.cloud_name);
 
-    if (!cloudinaryResponse.secure_url) {
-      throw new Error("Cloudinary upload failed");
+      const cloudinaryResponse = await fetch(Cloudinary.api, {
+        method: "POST",
+        body: data,
+      }).then((res) => res.json());
+
+      if (!cloudinaryResponse.secure_url) {
+        throw new Error("Cloudinary upload failed");
+      }
+
+      imageUrlToUse = cloudinaryResponse.secure_url; // Use the new image URL
     }
-
-    const imageUrl = cloudinaryResponse.secure_url;
 
     const values = {
       title,
       content,
       category,
-      image: imageUrl,
+      image: imageUrlToUse, // Use the image URL (either from Cloudinary or fetched)
     };
 
     try {
@@ -128,6 +134,7 @@ const EditBlog = () => {
           borderRadius: "4px",
         }}
       />
+
       <label htmlFor="">Category: </label>
       <select
         id="category"
@@ -180,6 +187,13 @@ const EditBlog = () => {
             borderRadius: "4px",
           }}
         />
+        {imageUrl && !image && (
+          <img
+            src={imageUrl}
+            alt="Current Thumbnail"
+            style={{ width: "100px", marginTop: "10px" }}
+          />
+        )}
       </div>
 
       {loading && <p style={{ color: "black" }}>Loading...</p>}

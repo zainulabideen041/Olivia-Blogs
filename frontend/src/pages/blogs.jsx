@@ -128,7 +128,7 @@ const Blogs = () => {
                     </div>
                     <img
                       // src={`https://backend-umber-chi-47.vercel.app/${blog.image}`}
-                      src={blogImg}
+                      src={blog.image}
                       alt={blog.title}
                     />
                   </div>
