@@ -551,7 +551,6 @@ p {
   max-height: 200vh;
   overflow-y: scroll;
   border-radius: 8px;
-  overflow: hidden;
   margin-bottom: 50px;
   margin-top: 20px;
   font-size: 14px; /* Adjust font size for better readability */
@@ -606,16 +605,18 @@ p {
 
 /* Responsive styles */
 @media (max-width: 768px) {
-  /* Make table scrollable on smaller screens */
+  /* Ensure table layout is the same but allow horizontal scrolling */
   .blogs-cards {
     display: block;
-    overflow-x: auto;
-    overflow-y: auto;
-    white-space: nowrap; /* Prevent table from breaking */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent table from breaking into multiple lines */
+    width: 100%;
   }
+
   .blogs-cards::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and newer versions of Edge */
+    display: block; /* Allow horizontal scrollbar on smaller screens */
   }
+
   .blogs-cards th,
   .blogs-cards td {
     white-space: nowrap;
@@ -631,50 +632,21 @@ p {
 }
 
 @media (max-width: 480px) {
-  /* Stack the table rows for extra small devices */
+  /* For extra small devices, keep the same structure */
   .blogs-cards {
-    border: none;
     display: block;
-    padding: 0;
+    overflow-x: auto; /* Ensure horizontal scrolling is still enabled */
   }
-  .blogs-cards tbody tr {
-    display: block;
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-  }
-  .blogs-cards th {
-    display: none; /* Hide table headers */
-  }
+  .blogs-cards th,
   .blogs-cards td {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
-  }
-  .blogs-cards td::before {
-    content: attr(data-label); /* Use custom data-label for accessibility */
-    font-weight: bold;
-    color: #9100d4;
-    margin-bottom: 5px;
-  }
-  .blogs-cards td[data-label="Actions"] {
-    display: flex;
-    justify-content: flex-start;
+    white-space: nowrap;
   }
   .blogs-cards img {
-    width: 70px;
-    height: 70px; /* Adjust image size */
-    margin-bottom: 10px;
+    width: 60px;
+    height: 60px; /* Adjust image size */
   }
   .action-icons {
     font-size: 18px; /* Adjust icon size */
-    margin-right: 10px;
-  }
-  .blogs-cards td .action-icons {
-    margin: 5px 10px 0 0; /* Adjust margin for actions */
   }
 }
 
@@ -700,6 +672,7 @@ p {
     font-size: 18px;
   }
 }
+
 
 /* ADD BLOG PAGE  */
 .add-blog-section h2 {
