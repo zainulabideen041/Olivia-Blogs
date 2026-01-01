@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LoginStatus from "./components/authentication/loginStatus";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Register from "./components/authentication/Register";
